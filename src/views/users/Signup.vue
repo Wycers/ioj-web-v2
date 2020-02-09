@@ -10,6 +10,7 @@ v-hover(v-slot:default="{ hover }")
     )
       v-toolbar-title {{ $t('page.signup') }}
       v-spacer
+      v-btn(text to="/u/signin") Sign in
       v-btn(icon to="/")
         v-icon fa-home
       v-menu(open-on-hover offset-y)
@@ -69,10 +70,6 @@ v-hover(v-slot:default="{ hover }")
         div {{ message }}
     v-card-actions
       v-spacer
-      v-btn(
-        normal
-        to="/signin"
-      ) sign in
       v-btn(
         color="primary"
         :disabled="!valid"
