@@ -23,11 +23,11 @@ const routes = [
     path: "/u",
     component: () => import(`@/layouts/Account.vue`),
     children: [
-      // {
-      //   path: "signin",
-      //   component: () => import("@/views/Signin.vue"),
-      //   name: "signin"
-      // },
+      {
+        path: "signin",
+        component: () => import("@/views/users/Signin.vue"),
+        name: "signin"
+      },
       {
         path: "signup",
         component: () => import("@/views/users/Signup.vue"),

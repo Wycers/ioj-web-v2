@@ -33,7 +33,8 @@
 
         },
         "studentID": "学号",
-        "password": "CAS密码",
+        "username": "用户名",
+        "password": "密码",
         "department": "院系",
         "semester": "学期",
         "keyword": "关键词"

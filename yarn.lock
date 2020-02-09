@@ -10624,6 +10624,13 @@ vue-loader@^15.8.3:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-meta@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npm.taobao.org/vue-meta/download/vue-meta-2.3.2.tgz#d87a456582da040ff7bc9304701cca47ac36ee1e"
+  integrity sha1-2HpFZYLaBA/3vJMEcBzKR6w27h4=
+  dependencies:
+    deepmerge "^4.2.2"
+
 vue-property-decorator@^8.3.0:
   version "8.4.0"
   resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.4.0.tgz#f4e641f84ca51a7b4721e236392a1efbb6eac00b"
