@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+// import HomeStartScreen from "../views/HomeStartScreen.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,11 @@ const routes = [
     name: "Home",
     component: Home
   },
+  // {
+  //   path: "/qwq",
+  //   name: "QwQ",
+  //   component: HomeStartScreen
+  // },
   {
     path: "/about",
     name: "About",
@@ -32,12 +38,12 @@ const routes = [
         path: "signup",
         component: () => import("@/views/users/Signup.vue"),
         name: "signup"
+      },
+      {
+        path: "preference",
+        component: () => import("@/views/users/Preference.vue"),
+        name: "preference"
       }
-      // {
-      //   path: ":uid",
-      //   component: () => import("@/views/User.vue"),
-      //   name: "user_page"
-      // }
     ]
   }
 ];

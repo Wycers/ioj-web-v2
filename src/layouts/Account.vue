@@ -1,20 +1,18 @@
 <template lang="pug">
-v-content
-  v-app
-    v-container.bkg(
-      fill-height
-      fluid
+v-content.fill-height.bkg
+  v-container.fill-height(
+    fluid
+  )
+    v-layout(
+      align-center
+      justify-center
     )
-      v-layout(
-        align-center
-        justify-center
+      v-flex(
+        xs12
+        sm8
+        md4
       )
-        v-flex(
-          xs12
-          sm8
-          md4
-        )
-          router-view
+        router-view
 </template>
 <style lang="stylus" scoped>
 .bkg
@@ -25,4 +23,6 @@ v-content
   position: relative;
   height: 100%;
   width: 100%;
+.fill-height
+  height: 100%
 </style>
