@@ -22,7 +22,7 @@
       text
       @click="onClick($event, link)"
     >
-      {{ link.text }}
+      {{ $t(link.text) }}
     </v-btn>
     <ToolbarAvatar />
   </v-app-bar>
@@ -39,10 +39,10 @@ export default {
   data() {
     return {
       links: [
-        { text: "Home", to: "/", icon: "home" },
-        { text: "Problem", to: "/p", icon: "rounded_corner" },
-        { text: "Group", to: "/g", icon: "group" },
-        { text: "Contest", to: "/c", icon: "toc" }
+        { text: "nav.home", to: "/", icon: "home" },
+        { text: "nav.problem", to: "/p", icon: "rounded_corner" },
+        { text: "nav.group", to: "/g", icon: "group" },
+        { text: "nav.contest", to: "/c", icon: "toc" }
       ]
     };
   },
