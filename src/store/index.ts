@@ -4,8 +4,24 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    drawer: false,
+    links: [
+      { text: "nav.home", to: "/", icon: "mdi-home" },
+      { text: "nav.problem", to: "/p", icon: "mdi-puzzle" },
+      { text: "nav.group", to: "/g", icon: "fa-home" },
+      { text: "nav.contest", to: "/c", icon: "fa-feather" }
+    ]
+  },
+  getters: {
+    links: state => {
+      return state.links;
+    }
+  },
+  mutations: {
+    setDrawer: (state, payload) => (state.drawer = payload),
+    toggleDrawer: state => (state.drawer = !state.drawer)
+  },
   actions: {},
   modules: {}
 });
