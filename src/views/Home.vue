@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-content class="pa-0">
+    <v-container fluid class="my-4">
+      <v-row wrap align="center" justify="center" row fill-height class="">
+        <v-col xs="12" md="10">
+          <HomeStartScreen />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import HomeStartScreen from "@/components/Home";
 
 export default {
-  name: "Home",
+  metaInfo: () => ({
+    title: "Infinity OJ"
+  }),
   components: {
-    HelloWorld
+    HomeStartScreen
   }
 };
 </script>

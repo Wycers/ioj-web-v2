@@ -1,5 +1,5 @@
 <template lang="pug">
-v-container(grid-list-xl align-center)
+v-container(grid-list-xl align="center")
   v-row(row wrap)
     v-hover(slot="offset")
       template(v-slot="{ hover }")
