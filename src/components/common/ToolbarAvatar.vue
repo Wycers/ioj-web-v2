@@ -12,10 +12,10 @@ v-menu(offset-y  open-on-hover )
       )
   v-list
     v-list-item(to="/profile")
-      v-list-item-title {{ $t('toolbar.profile') }}
+      v-list-item-title {{ $t('nav.profile') }}
     v-divider
     v-list-item(@click="logout")
-      v-list-item-title {{ $t('toolbar.logout') }}
+      v-list-item-title {{ $t('nav.logout') }}
 </template>
 <script>
 export default {
