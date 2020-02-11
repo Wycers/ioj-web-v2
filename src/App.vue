@@ -1,33 +1,26 @@
 <template>
   <v-app>
-    <Drawer />
-    <Toolbar />
-    <v-content id="home">
-      <v-slide-y-reverse-transition>
-        <router-view v-show="show" />
-      </v-slide-y-reverse-transition>
-    </v-content>
+    <CoreDrawer />
+    <CoreToolbar />
+    <CoreView />
     <!-- <BottomNav /> -->
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Drawer from "@/components/common/Drawer.vue";
-import Toolbar from "@/components/common/Toolbar.vue";
+import CoreDrawer from "@/components/common/Drawer.vue";
+import CoreView from "@/components/common/View.vue";
+import CoreToolbar from "@/components/common/Toolbar.vue";
 // import BottomNav from "@/components/common/BottomNav.vue";
 
 export default Vue.extend({
   name: "App",
   components: {
-    Drawer,
-    Toolbar
+    CoreDrawer,
+    CoreView,
+    CoreToolbar
     // BottomNav
-  },
-  data() {
-    return {
-      show: true
-    };
   }
 });
 </script>

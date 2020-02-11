@@ -35,6 +35,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import ToolbarAvatar from "@/components/common/ToolbarAvatar.vue";
 export default {
+  name: "CoreToolbar",
   components: {
     ToolbarAvatar
   },

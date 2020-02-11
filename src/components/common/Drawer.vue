@@ -1,28 +1,28 @@
 <template>
   <v-navigation-drawer v-model="drawer" app temporary>
-    <v-flex xs12 class="pl-3 pt-5 grey lighten-5 pb-2">
+    <v-col xs="12" class="pl-3 pt-5 grey lighten-5 pb-2">
       <v-img
         src="http://cdn.wycer.cn/0f2a8a4f-b69d-4331-b236-bd30293a8724"
         lazy-src="http://cdn.wycer.cn/0f2a8a4f-b69d-4331-b236-bd30293a8724"
         width="10vh"
       >
-        <v-layout
+        <v-row
           slot="placeholder"
           fill-height
-          align-center
-          justify-center
+          align="center"
+          justify="center"
           ma-0
         >
           <v-progress-circular
             indeterminate
             color="grey lighten-5"
           ></v-progress-circular>
-        </v-layout>
+        </v-row>
       </v-img>
       <p class="google-font mt-2" style="font-size:130%">
         Infinity OJ
       </p>
-    </v-flex>
+    </v-col>
     <v-list shaped>
       <v-subheader>Links</v-subheader>
       <v-list-item-group color="primary">
@@ -46,7 +46,7 @@
 // Utilities
 import { mapGetters, mapMutations } from "vuex";
 export default {
-  name: "Drawer",
+  name: "CoreDrawer",
   computed: {
     ...mapGetters(["links"]),
     drawer: {
