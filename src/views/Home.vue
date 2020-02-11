@@ -14,6 +14,9 @@
 import HomeStartScreen from "@/components/Home";
 
 export default {
+  metaInfo: () => ({
+    title: "Infinity OJ"
+  }),
   components: {
     HomeStartScreen
   }
