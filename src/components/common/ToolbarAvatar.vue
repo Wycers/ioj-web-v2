@@ -19,6 +19,11 @@ v-menu(offset-y  open-on-hover )
 </template>
 <script>
 export default {
-  name: "ToolbarAvatar"
+  name: "ToolbarAvatar",
+  methods: {
+    logout() {
+      console.log("logout");
+    }
+  }
 };
 </script>
