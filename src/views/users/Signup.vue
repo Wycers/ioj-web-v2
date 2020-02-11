@@ -12,11 +12,11 @@ v-hover(v-slot:default="{ hover }")
       v-spacer
       v-btn(text to="/u/signin") Sign in
       v-btn(icon to="/")
-        v-icon fa-home
+        v-icon mdi-home
       v-menu(open-on-hover offset-y)
         template(v-slot:activator="{ on }")
           v-btn(v-on="on" icon)
-            v-icon fa-language
+            v-icon mdi-translate
         v-list
           v-list-item(v-for="locale in locales" :key="locale.value" @click="setlocale(locale.value)")
             v-list-item-title {{ locale.text }}
@@ -29,7 +29,7 @@ v-hover(v-slot:default="{ hover }")
         v-text-field(
           v-model="username"
           autocomplete="off"
-          prepend-icon="fa-user"
+          prepend-icon="mdi-account"
           required
           filled
           :label="$t('field.username')"
@@ -39,7 +39,7 @@ v-hover(v-slot:default="{ hover }")
         v-text-field(
           v-model="password"
           autocomplete="new-password"
-          prepend-icon="fa-lock"
+          prepend-icon="mdi-lock"
           type="password"
           required
           filled
@@ -49,7 +49,7 @@ v-hover(v-slot:default="{ hover }")
         v-text-field(
           v-model="rpassword"
           autocomplete="new-password"
-          prepend-icon="fa-lock"
+          prepend-icon="mdi-lock"
           type="password"
           required
           filled
@@ -59,7 +59,7 @@ v-hover(v-slot:default="{ hover }")
         v-text-field(
           v-model="ic"
           autocomplete="off"
-          prepend-icon="fa-infinity"
+          prepend-icon="mdi-infinity"
           filled
           :rules="icRules"
           label="Invite Code"
