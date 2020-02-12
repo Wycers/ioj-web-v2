@@ -26,6 +26,18 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
+    path: "/p",
+    name: "Problem",
+    component: () =>
+      import(/* webpackChunkName: "problem" */ "../views/problems/index.vue")
+  },
+  {
+    path: "/c",
+    name: "Problem",
+    component: () =>
+      import(/* webpackChunkName: "contest" */ "../views/contests/index.vue")
+  },
+  {
     path: "/u",
     component: () => import(`@/layouts/Account.vue`),
     children: [
