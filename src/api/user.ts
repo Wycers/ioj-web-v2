@@ -29,3 +29,7 @@ export function signup(
 export function signout() {
   return http.delete('/session/principal');
 }
+
+export function getRole(): Record<string, any> {
+  return http.get('/role');
+}

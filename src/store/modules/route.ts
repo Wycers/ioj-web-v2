@@ -17,7 +17,12 @@ const state: RouteState = {
   addRoutes: [],
 };
 
-const getters: GetterTree<RouteState, RootState> = {};
+const getters: GetterTree<RouteState, RootState> = {
+  permissionRoutes(state: RouteState): Array<RouteConfig> {
+    const { routes } = state;
+    return routes;
+  },
+};
 
 const mutations: MutationTree<RouteState> = {
   setAddRoutes: set('addRoutes'),

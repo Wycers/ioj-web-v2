@@ -1,9 +1,10 @@
 import { Module, GetterTree, ActionTree, MutationTree } from 'vuex';
 import { RootState } from '../index';
-import { signin, recover, signout } from '@/api/user';
+import { signin, recover, signout, getRole } from '@/api/user';
 
 interface User {
   username: string;
+  role: Array<string>;
 }
 
 export interface UserState {
@@ -18,6 +19,10 @@ const getters: GetterTree<UserState, RootState> = {
     const { user } = state;
     return (user && user.username) || '';
   },
+  role(state: UserState): Array<string> {
+    const { user } = state;
+    return (user && user.role) || [];
+  },
 };
 
 const state: UserState = {
@@ -26,6 +31,11 @@ const state: UserState = {
 };
 
 const mutations: MutationTree<UserState> = {
+  setRole(state, role: Array<string>) {
+    if (state.user) {
+      state.user.role = role;
+    }
+  },
   login(state, user: User) {
     state.error = false;
     state.user = user;
@@ -43,19 +53,29 @@ const actions: ActionTree<UserState, RootState> = {
       console.log('recover', res);
       const user: User = {
         username: res.name,
+        role: [],
       };
       commit('login', user);
     } catch (err) {
       console.log(err);
     }
   },
-  async login({ dispatch }, { username, password }): Promise<void> {
+  async login({ dispatch }, { username, password }) {
     await signin(username, password);
     await dispatch('recover');
   },
   async logout({ commit }) {
     await signout();
     commit('logout');
+  },
+  async getRole({ commit }) {
+    try {
+      const res = await getRole();
+      const role = res.roles;
+      commit('setRole', role);
+    } catch (err) {
+      console.log(err);
+    }
   },
 };
 

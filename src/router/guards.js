@@ -1,7 +1,17 @@
 import store from '@/store';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-import whiteList from './whiteList';
+
+const whiteList = [
+  '/',
+  '/u/signin',
+  '/u/signup',
+  '/auth-redirect',
+  '/p',
+  '/p/.*',
+  '/s',
+];
+
 // import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
@@ -11,47 +21,30 @@ const install = router => {
     // start progress bar
     NProgress.start();
 
-    // determine whether the user has logged in
-    console.log(store.getters.authStatus);
-    if (store.getters.authStatus === 'unknown') {
-      try {
-        const { roles } = await store.dispatch('user/getProfile');
-        const accessRoutes = await store.dispatch(
-          'permission/generateRoutes',
-          roles
-        );
-        // dynamically add accessible routes
-        router.addRoutes(accessRoutes);
-        await store.commit('user/auth_success');
+    const username = store.getters['user/username'];
 
-        next({ ...to, replace: true });
-      } catch (error) {
-        await store.commit('user/auth_error');
-        NProgress.done();
-      }
-    }
-    if (store.getters.authStatus === 'success') {
-      if (to.path === '/u/signin') {
+    if (username) {
+      if (to.path === '/u/signin' || to.path === '/u/signup') {
         // if is logged in, redirect to the home page
         next({ path: '/' });
-        NProgress.done();
+        NProgress.done(); // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
       } else {
-        // determine whether the user has obtained his permission roles through getProfile
-        const hasRoles = store.getters.roles && store.getters.roles.length > 0;
-        console.log(hasRoles);
+        // determine whether the user has obtained his permission roles through getInfo
+        const roles = store.getters['user/role'];
+        const hasRoles = roles && roles.length > 0;
         if (hasRoles) {
           next();
         } else {
           try {
             // get user info
             // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-            const { roles } = await store.dispatch('user/getProfile');
-            console.log(roles);
+            const roles = await store.dispatch('user/getRole');
             // generate accessible routes map based on roles
             const accessRoutes = await store.dispatch(
-              'permission/generateRoutes',
+              'route/generateRoutes',
               roles
             );
+
             // dynamically add accessible routes
             router.addRoutes(accessRoutes);
 
@@ -60,10 +53,9 @@ const install = router => {
             next({ ...to, replace: true });
           } catch (error) {
             // remove token and go to login page to re-login
-            // await store.dispatch('user/resetToken')
-            // Message.error(error || 'Has Error')
-            // next(`/u/signin?redirect=${to.path}`)
-            // next()
+            // await store.dispatch('user/resetToken');
+            // Message.error(error || 'Has Error');
+            next(`/u/signin?redirect=${to.path}`);
             NProgress.done();
           }
         }
