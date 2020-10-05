@@ -1,15 +1,26 @@
 <template>
   <v-app>
-    <transition mode="out-in" name="slide-y-transition">
-      <router-view />
-    </transition>
+    <CoreDrawer />
+    <CoreToolbar />
+    <CoreView />
+    <!-- <BottomNav /> -->
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
+import CoreDrawer from '@/components/common/Drawer.vue';
+import CoreView from '@/components/common/View.vue';
+import CoreToolbar from '@/components/common/Toolbar.vue';
+// import BottomNav from "@/components/common/BottomNav.vue";
 
 export default Vue.extend({
-  name: "App"
+  name: 'App',
+  components: {
+    CoreDrawer,
+    CoreView,
+    CoreToolbar,
+    // BottomNav
+  },
 });
 </script>

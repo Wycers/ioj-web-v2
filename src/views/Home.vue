@@ -6,13 +6,14 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+// import HomeStartScreen from '@/components/Home';
 
 export default {
-  name: "Home",
+  metaInfo: () => ({
+    title: 'Infinity OJ',
+  }),
   components: {
-    HelloWorld
-  }
+    // HomeStartScreen,
+  },
 };
 </script>

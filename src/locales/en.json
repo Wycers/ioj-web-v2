@@ -35,7 +35,8 @@
         "password": "Password",
         "department": "Department",
         "semester": "Semester",
-        "keyword": "Keyword"
+        "keyword": "Keyword",
+        "email": "Email"
     },
     "count": {
         "credit": "{n} credit"

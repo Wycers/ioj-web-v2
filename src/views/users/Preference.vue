@@ -100,13 +100,13 @@ v-container(grid-list-xl align-center)
 // import CUAvatar from "@/components/CUAvatar";
 export default {
   metaInfo: () => ({
-    title: "Profile · IOJ"
+    title: 'Profile · IOJ',
   }),
   data() {
     return {
-      locales: ["en", "zh-cmn-Hans", "zh-cmn-Hant"].map(item => ({
-        text: this.$t("locale", item),
-        value: item
+      locales: ['en', 'zh-cmn-Hans', 'zh-cmn-Hant'].map(item => ({
+        text: this.$t('locale', item),
+        value: item,
       })),
       avatar: this.$store.state.user.avatar,
       name: this.$store.state.user.nickname,
@@ -118,18 +118,18 @@ export default {
       hideEmail: this.$store.state.user.hide_email,
       hideQQ: this.$store.state.user.hide_QQ,
       hideBio: this.$store.state.user.hide_bio,
-      hideGender: this.$store.state.user.hide_gender
+      hideGender: this.$store.state.user.hide_gender,
     };
   },
   computed: {
     genders() {
-      return ["male", "female"].map(item => this.$t(`sex.${item}`));
-    }
+      return ['male', 'female'].map(item => this.$t(`sex.${item}`));
+    },
   },
   watch: {
     locale(val) {
       this.$i18n.locale = val;
-    }
+    },
   },
   methods: {
     // cropSuccess(imgDataUrl, field) {
@@ -162,20 +162,20 @@ export default {
           hideMail: this.hide_mail,
           hideQQ: this.hide_QQ,
           hideBio: this.hide_bio,
-          hideGender: this.hide_gender
+          hideGender: this.hide_gender,
         };
-        await this.$store.dispatch("UpdateProfile", data);
+        await this.$store.dispatch('UpdateProfile', data);
       } catch (err) {
         console.log(err);
       }
     },
     async reset() {
       try {
-        await this.$store.dispatch("FetchProfile");
+        await this.$store.dispatch('FetchProfile');
       } catch (err) {
         console.log(err);
       }
-    }
-  }
+    },
+  },
 };
 </script>
