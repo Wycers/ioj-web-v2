@@ -63,9 +63,11 @@
         "submit": "Submit",
         "required": "{field} is required"
     },
-    "toolbar": {
+    "nav": {
+        "home": "Home",
         "status": "Status",
         "problem": "Problem",
+        "group": "Group",
         "contest": "Contest",
         "discussion": "Discussion",
         "profile": "Profile",

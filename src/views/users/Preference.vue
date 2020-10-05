@@ -1,15 +1,15 @@
 <template lang="pug">
 
-v-container(grid-list-xl align-center)
-  v-layout(row wrap)
+v-container(grid-list-xl align="center")
+  v-row(row wrap)
     v-row
     v-card(width="90%" max-width="1024" class="mx-auto my-5")
       v-card-title.title {{ $t('profile.title') }}
       v-card-text
-        v-layout(row wrap text-xs-center)
-          v-flex.my-3(xs12 lg3)
+        v-row(row wrap text-xs-center)
+          v-col.my-3(xs="12" lg="3")
             div.title.font-weight-light {{ $t('profile.avatar') }}
-          v-flex.my-3(xs12 lg3)
+          v-col.my-3(xs="12" lg="3")
             //- cuavatar(
             //-   :uploadUrl="'/user/avatar'"
             //-   :src="avatar"
@@ -20,10 +20,10 @@ v-container(grid-list-xl align-center)
             //- )
             div gg
         v-divider.my-3
-        v-layout(row wrap text-xs-center)
-          v-flex.my-3(xs12 lg3)
+        v-row(row wrap text-xs-center)
+          v-col.my-3(xs="12" lg="3")
             div.title.font-weight-light {{ $t('profile.settings') }}
-          v-flex.my-3(xs12 lg9)
+          v-col.my-3(xs="12" lg="9")
             v-form(ref="common_setting" color="white")
               v-text-field(
                 v-model="name"
@@ -62,10 +62,10 @@ v-container(grid-list-xl align-center)
                 :items="genders"
               )
         v-divider.my-3
-        v-layout(row wrap text-xs-center)
-          v-flex.my-3(xs12 lg3)
+        v-row(row wrap text-xs-center)
+          v-col.my-3(xs="12" lg="3")
             div.title.font-weight-light {{ $t('profile.privacy') }}
-          v-flex.my-3(xs12 lg9)
+          v-col.my-3(xs="12" lg="9")
             v-switch(v-model="hide_email"
               class="ma-2"
               :label="$t('field.profile.hide_email')"

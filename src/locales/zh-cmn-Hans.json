@@ -52,8 +52,11 @@
         "submit": "提交",
         "required": "{field} 是必填项目"
     },
-    "toolbar": {
+    "nav": {
+        "home": "主页",
+        "status": "状态",
         "problem": "题目",
+        "group": "小组",
         "contest": "比赛",
         "discussion": "讨论"
     }

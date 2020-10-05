@@ -9,7 +9,6 @@ import './styles/main.styl';
 import './plugins/vue-meta';
 
 import './components/dashboard';
-
 Vue.config.productionTip = false;
 
 new Vue({

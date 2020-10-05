@@ -12,11 +12,11 @@ v-hover(v-slot:default="{ hover }")
       v-spacer
       v-btn(text to="/u/signup") {{ $t('page.signup') }}
       v-btn(icon to="/")
-        v-icon fa-home
+        v-icon mdi-home
       v-menu(open-on-hover offset-y)
         template(v-slot:activator="{ on }")
           v-btn(v-on="on" icon)
-            v-icon fa-language
+            v-icon mdi-translate
         v-list
           v-list-item(v-for="locale in locales" :key="locale.value" @click="setlocale(locale.value)")
             v-list-item-title {{ locale.text }}
@@ -28,7 +28,7 @@ v-hover(v-slot:default="{ hover }")
       )
         v-text-field(
           v-model="username.value"
-          prepend-icon="fa-user"
+          prepend-icon="mdi-account"
           type="text"
           required
           filled
@@ -39,7 +39,7 @@ v-hover(v-slot:default="{ hover }")
         )
         v-text-field(
           v-model="password.value"
-          prepend-icon="fa-lock"
+          prepend-icon="mdi-lock"
           type="password"
           required
           filled

@@ -3,14 +3,14 @@ v-content.fill-height.bkg
   v-container.fill-height(
     fluid
   )
-    v-layout(
-      align-center
-      justify-center
+    v-row(
+      align="center"
+      justify="center"
     )
-      v-flex(
-        xs12
-        sm8
-        md4
+      v-col(
+        xs="12"
+        sm="8"
+        md="4"
       )
         router-view
 </template>
