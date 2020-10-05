@@ -8,19 +8,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import CoreDrawer from "@/components/common/Drawer.vue";
-import CoreView from "@/components/common/View.vue";
-import CoreToolbar from "@/components/common/Toolbar.vue";
+import Vue from 'vue';
+import CoreDrawer from '@/components/common/Drawer.vue';
+import CoreView from '@/components/common/View.vue';
+import CoreToolbar from '@/components/common/Toolbar.vue';
 // import BottomNav from "@/components/common/BottomNav.vue";
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
   components: {
     CoreDrawer,
     CoreView,
-    CoreToolbar
+    CoreToolbar,
     // BottomNav
-  }
+  },
 });
 </script>

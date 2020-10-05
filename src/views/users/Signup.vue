@@ -10,7 +10,7 @@ v-hover(v-slot:default="{ hover }")
     )
       v-toolbar-title {{ $t('page.signup') }}
       v-spacer
-      v-btn(text to="/u/signin") Sign in
+      v-btn(text to="/u/signin") {{ $t('page.signin') }}
       v-btn(icon to="/")
         v-icon mdi-home
       v-menu(open-on-hover offset-y)
@@ -26,6 +26,7 @@ v-hover(v-slot:default="{ hover }")
         v-model="valid"
         lazy-validation
       )
+        v-icon
         v-text-field(
           v-model="username"
           autocomplete="off"
@@ -57,13 +58,12 @@ v-hover(v-slot:default="{ hover }")
           :rules="rpasswordRules"
         )
         v-text-field(
-          v-model="ic"
-          autocomplete="off"
-          prepend-icon="mdi-infinity"
-          filled
-          :rules="icRules"
-          label="Invite Code"
+          v-model="email"
+          prepend-icon="mdi-email"
           required
+          filled
+          :label="$t('field.email')"
+          :rules="emailRules"
         )
     v-expand-transition
       v-alert(v-show="toggle" :color="color" :icon="icon")
@@ -79,75 +79,102 @@ v-hover(v-slot:default="{ hover }")
 </template>
 
 <script>
+import Vue from 'vue';
+import { signup } from '@/api/user';
 export default {
   data() {
     return {
       valid: false,
-      XD: true,
-      username: "",
-      password: "",
-      rpassword: "",
-      ic: "",
+      username: '',
+      password: '',
+      rpassword: '',
+      email: '',
       usernameRules: [
-        v => !!v || "Username is required",
-        v => (v && /^[\da-z]+$/i.test(v)) || "Invalid character!",
-        v => (v && v.length >= 6) || "6 characters at least"
+        v => !!v || 'Username is required',
+        v => (v && /^[\da-z]+$/i.test(v)) || 'Invalid character!',
+        v => (v && v.length >= 6) || '6 characters at least',
       ],
       passwordRules: [
-        v => !!v || "Password is required",
-        v => (v && v.length >= 6) || "6 characters at least"
+        v => !!v || 'Password is required',
+        v => (v && v.length >= 6) || '6 characters at least',
       ],
       rpasswordRules: [
-        v => !!v || "Password is required",
-        v => v === this.password || "Not the same"
+        v => !!v || 'Email is required',
+        v => v === this.password || 'Not the same',
       ],
-      icRules: [
-        v => !!v || "Invite Code is required"
-        //
+      //
+      emailRules: [
+        v => !!v || 'Password is required',
+        v =>
+          (v &&
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            )) ||
+          'Invalid character!',
       ],
-      color: "info",
-      icon: "info",
+      color: 'info',
+      icon: 'info',
       toggle: false,
       message: null,
-      locales: ["en", "zh-cmn-Hans", "zh-cmn-Hant"].map(item => ({
-        text: this.$t("locale", item),
-        value: item
-      }))
+      locales: ['en', 'zh-cmn-Hans', 'zh-cmn-Hant'].map(item => ({
+        text: this.$t('locale', item),
+        value: item,
+      })),
     };
   },
   methods: {
     onFocus() {
-      this.toggle = false;
+      Vue.nextTick(() => {
+        this.toggle = false;
+      });
+    },
+    toggleOn() {
+      Vue.nextTick(() => {
+        this.toggle = true;
+      });
     },
     setlocale(locale) {
       this.$i18n.locale = locale;
+    },
+    error(msg) {
+      this.color = 'error';
+      this.icon = 'mdi-alert';
+      this.message = msg;
+      this.toggleOn();
     },
     async onSubmit() {
       if (this.$refs.form.validate()) {
         const username = this.username;
         const password = this.password;
-        const inviteCode = this.ic;
+        const email = this.email;
+        console.log(email);
         try {
-          await this.$store.dispatch("Signup", {
+          const res = await signup(username, password, email);
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+          this.error('error');
+          return;
+        }
+        try {
+          await this.$store.dispatch('Signup', {
             username,
             password,
-            inviteCode
           });
-          this.color = "success";
-          this.icon = "check_circle";
-          this.message = "success";
-          this.toggle = true;
+          this.color = 'success';
+          this.icon = 'check_circle';
+          this.message = 'success';
+          this.toggleOn();
           setTimeout(() => {
-            this.$router.replace("/");
+            this.$router.replace('/');
           }, 1000);
-        } catch (error) {
-          this.color = "error";
-          this.icon = "error";
-          this.toggle = true;
-          this.message = "error";
+        } catch (err) {
+          console.log(err);
+          this.error('error');
+          return;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>

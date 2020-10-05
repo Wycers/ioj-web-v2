@@ -10,10 +10,13 @@
   </v-content>
 </template>
 <script>
-import ProblemList from "@/components/problems/ProblemList.vue";
+import ProblemList from '@/components/problems/ProblemList.vue';
 export default {
+  metaInfo: () => ({
+    title: 'Problems | IOJ',
+  }),
   components: {
-    ProblemList
-  }
+    ProblemList,
+  },
 };
 </script>

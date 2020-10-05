@@ -10,10 +10,10 @@
   </v-content>
 </template>
 <script>
-import ContestList from "@/components/contests/ContestList.vue";
+import ContestList from '@/components/contests/ContestList.vue';
 export default {
   components: {
-    ContestList
-  }
+    ContestList,
+  },
 };
 </script>

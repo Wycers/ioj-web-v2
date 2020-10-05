@@ -10,7 +10,7 @@ v-hover(v-slot:default="{ hover }")
     )
       v-toolbar-title {{ $t('page.signin') }}
       v-spacer
-      v-btn(text to="/u/signup") Sign up
+      v-btn(text to="/u/signup") {{ $t('page.signup') }}
       v-btn(icon to="/")
         v-icon mdi-home
       v-menu(open-on-hover offset-y)
@@ -62,75 +62,83 @@ v-hover(v-slot:default="{ hover }")
 </template>
 
 <script>
+import Vue from 'vue';
 export default {
   metaInfo: () => ({
-    title: "IOJ | Sign In"
+    title: `Sign In | IOJ`,
   }),
   data() {
     return {
       uValid: true,
       valid: true,
       username: {
-        value: "",
+        value: '',
         rules: [
           v =>
             !!v ||
-            this.$t("form.required", { field: this.$t("field.username") }),
-          () => this.uValid || "Username or Password Wrong"
-        ]
+            this.$t('form.required', { field: this.$t('field.username') }),
+          () => this.uValid || 'Username or Password Wrong',
+        ],
       },
       password: {
-        value: "",
+        value: '',
         rules: [
           v =>
             !!v ||
-            this.$t("form.required", { field: this.$t("field.password") }),
+            this.$t('form.required', { field: this.$t('field.password') }),
           // v => (v && v.length >= 6) || '6 characters at least',
-          () => this.uValid || "Username or Password Wrong"
-        ]
+          () => this.uValid || 'Username or Password Wrong',
+        ],
       },
-      color: "info",
-      icon: "info",
+      color: 'info',
+      icon: 'fa-info',
       toggle: false,
       message: null,
-      locales: ["en", "zh-cmn-Hans", "zh-cmn-Hant"].map(item => ({
-        text: this.$t("locale", item),
-        value: item
-      }))
+      locales: ['en', 'zh-cmn-Hans', 'zh-cmn-Hant'].map(item => ({
+        text: this.$t('locale', item),
+        value: item,
+      })),
     };
   },
   mounted() {
-    this.redirect = this.$route.query.redirect || "/";
+    this.redirect = this.$route.query.redirect || '/';
   },
   methods: {
     onFocus() {
-      this.toggle = false;
+      Vue.nextTick(() => {
+        this.toggle = false;
+      });
+    },
+    toggleOn() {
+      Vue.nextTick(() => {
+        this.toggle = true;
+      });
     },
     async onSubmit() {
       if (this.$refs.form.validate()) {
         try {
-          await this.$store.dispatch("user/login", {
+          await this.$store.dispatch('user/login', {
             username: this.username.value,
-            password: this.password.value
+            password: this.password.value,
           });
-          this.color = "success";
-          this.icon = "check_circle";
-          this.message = "success";
+          this.color = 'success';
+          this.icon = 'fa-check-circle';
+          this.message = 'success';
+          this.toggleOn();
           setTimeout(() => {
             this.$router.replace(this.redirect);
           }, 1000);
         } catch (error) {
-          this.color = "error";
-          this.icon = "error";
-          this.message = "error";
-        } finally {
-          this.toggle = true;
+          this.color = 'error';
+          this.icon = 'fa-exclamation-circle';
+          this.message = 'error';
+          this.toggleOn();
         }
       }
     },
     setlocale(locale) {
       this.$i18n.locale = locale;
-    }
-  }
+    },
+  },
 };
 </script>

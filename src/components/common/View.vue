@@ -6,14 +6,14 @@
   </v-content>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "CoreView",
+  name: 'CoreView',
   data() {
     return {
-      show: true
+      show: true,
     };
-  }
+  },
 });
 </script>

@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import HomeStartScreen from "@/components/Home";
+// import HomeStartScreen from '@/components/Home';
 
 export default {
   metaInfo: () => ({
-    title: "Infinity OJ"
+    title: 'Infinity OJ',
   }),
   components: {
-    HomeStartScreen
-  }
+    // HomeStartScreen,
+  },
 };
 </script>

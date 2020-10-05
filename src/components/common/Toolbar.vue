@@ -26,29 +26,44 @@
     >
       {{ $t(link.text) }}
     </v-btn>
-    <ToolbarAvatar />
+    <ToolbarAvatar v-if="!!username" />
+    <v-btn
+      v-else
+      class="ml-0 google-font hidden-sm-and-down"
+      style="text-transform: capitalize;"
+      text
+      to="/u/signin"
+    >
+      {{ $t('page.signin') }}
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
 // Utilities
-import { mapGetters, mapMutations } from "vuex";
-import ToolbarAvatar from "@/components/common/ToolbarAvatar.vue";
+import { mapGetters, mapMutations } from 'vuex';
+import ToolbarAvatar from '@/components/common/ToolbarAvatar.vue';
 export default {
-  name: "CoreToolbar",
+  name: 'CoreToolbar',
   components: {
-    ToolbarAvatar
+    ToolbarAvatar,
   },
   computed: {
-    ...mapGetters(["links"])
+    ...mapGetters({
+      links: 'links',
+      username: 'user/username',
+    }),
   },
   methods: {
-    ...mapMutations(["toggleDrawer"]),
+    ...mapMutations(['toggleDrawer']),
     onClick(e, item) {
       e.stopPropagation();
       if (item.to || !item.href) return;
       this.$vuetify.goTo(item.href);
-    }
-  }
+    },
+  },
+  created() {
+    this.$store.dispatch('user/recover');
+  },
 };
 </script>
