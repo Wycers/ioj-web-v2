@@ -3,7 +3,7 @@
     <v-container fluid class="my-4">
       <v-row wrap align="center" justify="center" row fill-height class="">
         <v-col xs="12" md="10">
-          <HomeStartScreen />
+          <Home />
         </v-col>
       </v-row>
     </v-container>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-// import HomeStartScreen from '@/components/Home';
+import Home from '@/components/Home';
 
 export default {
   metaInfo: () => ({
     title: 'Infinity OJ',
   }),
   components: {
-    // HomeStartScreen,
+    Home,
   },
 };
 </script>
