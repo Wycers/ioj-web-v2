@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Guards from './guards';
-import Home from '../views/Home.vue';
-// import HomeStartScreen from "../views/HomeStartScreen.vue";
+import Home from '@/views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -19,16 +18,7 @@ export const constantRoutes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/dashboard/index.vue'),
+      import(/* webpackChunkName: "about" */ '@/views/About.vue'),
   },
   {
     path: '/p/',
@@ -54,11 +44,12 @@ export const constantRoutes = [
     path: '/c',
     name: 'Problem',
     component: () =>
-      import(/* webpackChunkName: "contest" */ '../views/contests/index.vue'),
+      import(/* webpackChunkName: "contest" */ '@/views/contests/index.vue'),
   },
   {
     path: '/u',
     component: () => import(`@/layouts/Account.vue`),
+    hidden: true,
     children: [
       {
         path: 'signin',
@@ -85,22 +76,22 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/u',
+    path: '/u/preference',
     component: () => import(`@/layouts/Account.vue`),
     children: [
       {
-        path: '/u/preference',
+        path: '',
         component: () => import('@/views/users/Preference.vue'),
         name: 'preference',
       },
     ],
   },
   {
-    path: '/dashboard/',
+    path: '/dashboard/user',
     component: () => import(`@/views/dashboard/index.vue`),
     children: [
       {
-        path: 'user',
+        path: '',
         component: () => import(`@/components/dashboard/DashViews/User.vue`),
         name: 'User',
         meta: { title: 'User', icon: 'mdi-account', role: ['admin'] },
@@ -108,11 +99,11 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/dashboard/',
+    path: '/dashboard/problem',
     component: () => import(`@/views/dashboard/index.vue`),
     children: [
       {
-        path: 'problem',
+        path: '',
         component: () => import(`@/components/dashboard/DashViews/Problem.vue`),
         name: 'Problem',
         meta: {
@@ -124,11 +115,11 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/dashboard/',
+    path: '/dashboard/news',
     component: () => import(`@/views/dashboard/index.vue`),
     children: [
       {
-        path: 'news',
+        path: '',
         component: () => import(`@/components/dashboard/DashViews/News.vue`),
         name: 'News',
         meta: { title: 'News', icon: 'mdi-autorenew', role: ['admin'] },
@@ -136,11 +127,11 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/dashboard/',
+    path: '/dashboard/rejudge',
     component: () => import(`@/views/dashboard/index.vue`),
     children: [
       {
-        path: 'rejudge',
+        path: '',
         component: () => import(`@/components/dashboard/DashViews/Rejudge.vue`),
         name: 'Rejudge',
         meta: { title: 'Rejudge', icon: 'mdi-home', role: ['admin'] },

@@ -30,8 +30,8 @@ const mutations: MutationTree<RouteState> = {
 };
 
 function hasPermission(route: RouteConfig, roles: Array<string>): boolean {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role));
+  if (route.meta && route.meta.role) {
+    return roles.some(role => route.meta.role.includes(role));
   }
   return true;
 }
@@ -60,6 +60,8 @@ const actions: ActionTree<RouteState, RootState> = {
     const accessedRoutes = roles.includes('admin')
       ? asyncRoutes
       : filterAsyncRoutes(asyncRoutes, roles);
+    console.log('???', roles);
+    console.log('?', accessedRoutes);
     commit('setAddRoutes', accessedRoutes);
     commit('setRoutes', constantRoutes.concat(accessedRoutes));
     return accessedRoutes;

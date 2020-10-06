@@ -4,7 +4,7 @@ import { signin, recover, signout, getRole } from '@/api/user';
 
 interface User {
   username: string;
-  role: Array<string>;
+  role: Array<string> | null;
 }
 
 export interface UserState {
@@ -19,9 +19,9 @@ const getters: GetterTree<UserState, RootState> = {
     const { user } = state;
     return (user && user.username) || '';
   },
-  role(state: UserState): Array<string> {
+  role(state: UserState): Array<string> | null {
     const { user } = state;
-    return (user && user.role) || [];
+    return (user && user.role) || null;
   },
 };
 
@@ -53,7 +53,7 @@ const actions: ActionTree<UserState, RootState> = {
       console.log('recover', res);
       const user: User = {
         username: res.name,
-        role: [],
+        role: null,
       };
       commit('login', user);
     } catch (err) {
@@ -68,14 +68,16 @@ const actions: ActionTree<UserState, RootState> = {
     await signout();
     commit('logout');
   },
-  async getRole({ commit }) {
+  async getRole({ commit }): Promise<string[]> {
     try {
       const res = await getRole();
       const role = res.roles;
       commit('setRole', role);
+      return role;
     } catch (err) {
       console.log(err);
     }
+    return [];
   },
 };
 

@@ -31,7 +31,7 @@ const install = router => {
       } else {
         // determine whether the user has obtained his permission roles through getInfo
         const roles = store.getters['user/role'];
-        const hasRoles = roles && roles.length > 0;
+        const hasRoles = roles;
         if (hasRoles) {
           next();
         } else {
