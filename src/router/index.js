@@ -35,11 +35,11 @@ export const constantRoutes = [
     name: 'problemRank',
     component: () => import('@/views/problems/ranklist.vue'),
   },
-  {
-    path: '/p/:pid/discussion',
-    name: 'problemDiscussion',
-    component: () => import('@/views/problems/discussion.vue'),
-  },
+  // {
+  //   path: '/p/:pid/discussion',
+  //   name: 'problemDiscussion',
+  //   component: () => import('@/views/problems/discussion.vue'),
+  // },
   {
     path: '/c',
     name: 'Problem',

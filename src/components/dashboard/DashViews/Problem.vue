@@ -99,7 +99,7 @@ export default {
           value: 'type',
         },
         {
-          text: 'Special Judge',
+          text: 'Process',
           sortable: false,
           value: 'special',
         },
@@ -111,7 +111,7 @@ export default {
     };
   },
   mounted() {
-    getProblems().then(res => (this.desserts = res));
+    getProblems(1, 10).then(res => (this.desserts = res));
   },
   methods: {
     clickCreate() {
