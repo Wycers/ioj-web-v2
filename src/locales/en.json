@@ -1,5 +1,5 @@
 {
-    "locale": "SUSTech English",
+    "locale": "English",
     "page": {
         "signin": "Sign in",
         "signup": "Sign up"
@@ -58,6 +58,12 @@
         "reset": "Reset",
         "sync": "Sync now!",
         "cas": "CAS Settings"
+    },
+    "problem": {
+        "status": "Status",
+        "name": "Problem",
+        "acceptance": "Acceptance",
+        "submissions": "Submissions"
     },
     "form": {
         "submit": "Submit",
