@@ -1,30 +1,31 @@
 <template lang="pug">
-  v-card(
-    width="90%"
-    max-width="1024"
-    class="mx-auto my-5"
-    :class="cardClass"
-    tag="article")
-    v-card-title(class="justify-center") Discussion of {{ problem.title }}
-      div(v-for="item in tree.children"  width="100%" max-width="896" class="diss")
-        tree(:id="item.id",
-                    :user="item.user"
-                    :children="item.children"
-                    :content="item.content",
-                    :depth="0"
-                    :pid="problem.id"
-                    :timestamp="item.timestamp")
-
-    div(class="diss2")
-      v-textarea(
-        solo
-        v-model="textfield"
-        name="textfield"
-        label="Write your reply"
+v-card.mx-auto.my-5(
+  width='90%',
+  max-width='1024',
+  :class='cardClass',
+  tag='article'
+)
+  v-card-title.justify-center Discussion of {{ problem.title }}
+    .diss(v-for='item in tree.children', width='100%', max-width='896')
+      tree(
+        :id='item.id',
+        :user='item.user',
+        :children='item.children',
+        :content='item.content',
+        :depth='0',
+        :pid='problem.id',
+        :timestamp='item.timestamp'
       )
 
-      v-btn(color="primary" v-on:click="clickSubmit()") Submit
+  .diss2
+    v-textarea(
+      solo,
+      v-model='textfield',
+      name='textfield',
+      label='Write your reply'
+    )
 
+    v-btn(color='primary', v-on:click='clickSubmit()') Submit
 </template>
 
 <script>
