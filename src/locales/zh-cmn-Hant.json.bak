@@ -17,7 +17,7 @@
     "field": {
         "profile": {
             "nickname": "昵稱",
-            "name": "姓名", 
+            "name": "姓名",
             "email": "郵箱",
             "QQ": "QQ",
             "locale": "語言偏好",
