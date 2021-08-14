@@ -1,22 +1,21 @@
 <template lang="pug">
-v-container(grid-list-xl align-center)
-  v-layout(row wrap)
-
-    PostCard(:id="data.id" :html="data.descriptionHtml" :title="data.title" :memory="data.memoryLimit" :time="data.timeLimit")
-    CodeEditor(
-      :code="codeValue"
-      :pid="pid",
-      :type="data.type"
-    )
+v-container(grid-list-xl, align-center)
+  v-layout(row, wrap)
+    PostCard(:name='name', :shadowZ='16', :layout='"post"')
+    //- CodeEditor(
+    //-   :code="codeValue"
+    //-   :name="name",
+    //-   :type="data.type"
+    //- )
 </template>
 <script>
 import PostCard from '@/components/problems/PostCard.vue';
-import CodeEditor from '@/components/CodeEditor.vue';
+// import CodeEditor from '@/components/CodeEditor.vue';
 import { getProblem } from '@/api/problem';
 export default {
   components: {
     PostCard,
-    CodeEditor,
+    // CodeEditor,
   },
 
   data() {
@@ -27,12 +26,12 @@ export default {
     };
   },
   computed: {
-    pid() {
-      return this.$route.params.pid;
+    name() {
+      return this.$route.params.name;
     },
   },
   mounted() {
-    getProblem(this.$route.params.pid).then(res => (this.data = res));
+    getProblem(this.name).then(res => (this.data = res));
   },
 };
 </script>

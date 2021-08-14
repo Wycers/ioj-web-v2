@@ -7,51 +7,99 @@
     tag="article"
   >
     <v-card-title class="justify-center"> {{ title }} </v-card-title>
-    <v-card-title class="justify-center center">
+    <!-- <v-card-title class="justify-center center">
       Memory : {{ memory }} Bytes Time : {{ time }} ms
-    </v-card-title>
+    </v-card-title> -->
 
-    <div class="description">
-      <v-btn color="primary" @click="clickRank()"> Ranklist </v-btn>
-      <v-btn color="success" @click="clickDisscussion()"> Discussion </v-btn>
-    </div>
+    <!-- <div class="description">
+      <v-btn
+        color="primary"
+        @click="clickRank()"
+      > Ranklist </v-btn>
+      <v-btn
+        color="success"
+        @click="clickDisscussion()"
+      > Discussion </v-btn>
+    </div> -->
 
-    <v-card-text>
-      <span v-html="html" />
+    <v-card-text class="content custom">
+      <!-- <div v-html="html" /> -->
+      <!-- description -->
+      <vue-markdown :source="description"></vue-markdown>
+      <!-- inputFormat -->
+      <vue-markdown :source="inputFormat"></vue-markdown>
+      <!-- outputFormat -->
+      <vue-markdown :source="outputFormat"></vue-markdown>
+      <!-- example -->
+      <vue-markdown :source="example"></vue-markdown>
+      <!-- hintAndLimit -->
+      <vue-markdown :source="hintAndLimit"></vue-markdown>
     </v-card-text>
   </v-card>
 </template>
 <script>
 // import Tag from "./Tag";
 // import PostTime from "./PostTime";
+
+const test = `
+
+`;
+
+import { getPage } from '@/api/problem';
 export default {
   // components: {
   //   Tag,
   //   PostTime
   // },
   props: {
-    id: {
-      type: [Number],
+    name: {
+      type: String,
       required: true,
+      default: 'hello-world',
     },
-    html: {
-      type: [String],
+    shadowZ: Number,
+    layout: {
+      type: String,
       required: true,
+      default: 'layout',
     },
-    title: {
-      type: [String],
-      required: true,
-    },
-    time: {
-      type: [Number],
-      required: true,
-    },
-    memory: {
-      type: [Number],
-      required: true,
+  },
+  data: function() {
+    return {
+      title: '',
+      description: '',
+      inputFormat: '',
+      outputFormat: '',
+      example: test,
+      hintAndLimit: '',
+    };
+  },
+  mounted() {
+    this.getPage();
+  },
+  computed: {
+    cardClass() {
+      return [
+        this.shadowZ ? `elevation-${this.shadowZ}` : '',
+        `${this.layout}-card`,
+      ];
     },
   },
   methods: {
+    async getPage() {
+      try {
+        const res = await getPage(this.name);
+        this.title = res.title;
+        this.description = res.description;
+        this.inputFormat = res.input_format;
+        this.outputFormat = res.output_format;
+        this.example = res.example;
+        this.hintAndLimit = res.hint_and_limit;
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
     clickRank() {
       this.$router.push({
         name: 'problemRank',
@@ -65,7 +113,10 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
+// @import url('~@/assets/katex.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css');
+
 .post-card {
   // padding: 0 16px 16px;
 }
@@ -176,7 +227,6 @@ code, kbd, pre, samp {
 
   h1, h2, h3, h4, h5, h6, ol, ul, pre, table, figure {
     margin-bottom: 1.2em;
-    text-align: center;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -370,11 +420,13 @@ for type, exts in $code-languages {
     }
   }
 }
-.title{
-  text-align: center
+
+.title {
+  text-align: center;
 }
-.description{
+
+.description {
   margin: 10px;
-  text-align: center
+  text-align: center;
 }
 </style>

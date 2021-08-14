@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import i18n from './i18n';
 import './styles/main.styl';
 import './plugins/vue-meta';
+import './plugins/vue-markdown';
 
 import './components/dashboard';
 Vue.config.productionTip = false;

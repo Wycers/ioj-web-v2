@@ -13,3 +13,15 @@ export function getProblems(
     },
   });
 }
+
+export function getProblem(name: string): Record<string, any> {
+  return http.get(`/problem/${name}`);
+}
+
+export function getPage(name: string, locale = '*'): Record<string, any> {
+  return http.get(`/problem/${name}/page`, {
+    params: {
+      locale,
+    },
+  });
+}

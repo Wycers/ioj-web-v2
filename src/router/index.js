@@ -26,17 +26,17 @@ export const constantRoutes = [
     component: () => import('@/views/problems/index.vue'),
   },
   {
-    path: '/p/:pid',
+    path: '/p/:name',
     name: 'problem',
     component: () => import('@/views/problems/detail.vue'),
   },
   {
-    path: '/p/:pid/ranklist',
+    path: '/p/:name/ranklist',
     name: 'problemRank',
     component: () => import('@/views/problems/ranklist.vue'),
   },
   // {
-  //   path: '/p/:pid/discussion',
+  //   path: '/p/:name/discussion',
   //   name: 'problemDiscussion',
   //   component: () => import('@/views/problems/discussion.vue'),
   // },
