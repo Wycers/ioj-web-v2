@@ -62,6 +62,7 @@
     "problem": {
         "status": "Status",
         "name": "Problem",
+        "title": "Title",
         "acceptance": "Acceptance",
         "submissions": "Submissions"
     },

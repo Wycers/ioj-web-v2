@@ -5,6 +5,7 @@
     class="mx-auto my-5"
     :class="cardClass"
     tag="article"
+    rounded="lg"
   >
     <v-card-title class="justify-center"> {{ title }} </v-card-title>
     <!-- <v-card-title class="justify-center center">
@@ -100,16 +101,16 @@ export default {
         console.log(err);
       }
     },
-    clickRank() {
-      this.$router.push({
-        name: 'problemRank',
-      });
-    },
-    clickDisscussion() {
-      this.$router.push({
-        name: 'problemDiscussion',
-      });
-    },
+    // clickRank() {
+    //   this.$router.push({
+    //     name: 'problemRank',
+    //   });
+    // },
+    // clickDisscussion() {
+    //   this.$router.push({
+    //     name: 'problemDiscussion',
+    //   });
+    // },
   },
 };
 </script>

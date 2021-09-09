@@ -8084,7 +8084,7 @@ fsevents@~2.1.2:
     vue-property-decorator: ^8.3.0
     vue-router: ^3.1.5
     vue-template-compiler: ^2.6.11
-    vuetify: ^2.1.0
+    vuetify: ^2.5.8
     vuetify-loader: ^1.3.0
     vuex: ^3.1.2
   languageName: unknown
@@ -15693,12 +15693,12 @@ typescript@~3.7.5:
   languageName: node
   linkType: hard
 
-"vuetify@npm:^2.1.0":
-  version: 2.2.11
-  resolution: "vuetify@npm:2.2.11"
+"vuetify@npm:^2.5.8":
+  version: 2.5.8
+  resolution: "vuetify@npm:2.5.8"
   peerDependencies:
     vue: ^2.6.4
-  checksum: a05160686600d0bf5eee3917c065dc5898de3e835374f68a4b93e4d9d6eaae215e4094011102329718eb3fbdae65291cb631f6a9657cafb8dad60818e3048ddc
+  checksum: 4bb0f8c2de18228b794d8c4a0c6b0eb6d6cfc58a5f8c0a4a45cecdd8abd9b53708e1de33d11ff12dc379358b6ecad6bf7bbd96506d1f1a8a0704ead0ce05495b
   languageName: node
   linkType: hard
 

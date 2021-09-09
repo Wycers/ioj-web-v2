@@ -7,14 +7,17 @@ v-container(grid-list-xl, align-center)
     //-   :name="name",
     //-   :type="data.type"
     //- )
+    Upload(:name='name')
 </template>
 <script>
 import PostCard from '@/components/problems/PostCard.vue';
+import Upload from '@/components/problems/Upload.vue';
 // import CodeEditor from '@/components/CodeEditor.vue';
 import { getProblem } from '@/api/problem';
 export default {
   components: {
     PostCard,
+    Upload,
     // CodeEditor,
   },
 
