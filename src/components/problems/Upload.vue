@@ -37,6 +37,26 @@
         <button v-on:click="submitFiles()">Submit</button>
       </div>
     </v-card-text>
+    <v-dialog v-model="dialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+        <v-card-text
+          >Let Google help apps determine location. This means sending anonymous
+          location data to Google, even when no apps are running.</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Disagree
+          </v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -58,10 +78,16 @@ span.remove-file {
 
 <script>
 import { createVolume, getVolume, createFile } from '@/api/volume';
+import { createSubmission } from '@/api/submission';
 import { get } from 'js-cookie';
 
 export default {
-  props: {},
+  props: {
+    name: {
+      type: String,
+      default: '',
+    },
+  },
 
   /*
       Defines the data used by the component
@@ -140,6 +166,13 @@ export default {
           }
           this.currentVolumeName = volumeName;
         }
+
+        const submitRes = await createSubmission(
+          this.name,
+          this.currentVolumeName
+        );
+        const submissionId = submitRes.submission.submissionId;
+        this.$router.push(`/s/${submissionId}`);
       } catch (err) {
         console.log(err);
       }

@@ -74,10 +74,16 @@
         "home": "Home",
         "status": "Status",
         "problem": "Problem",
+        "submission": "Submission",
         "group": "Group",
         "contest": "Contest",
         "discussion": "Discussion",
         "profile": "Profile",
         "logout": "Logout"
+    },
+    "submission": {
+        "status": "Status",
+        "submittedAt": "Time",
+        "name": "Name"
     }
 }

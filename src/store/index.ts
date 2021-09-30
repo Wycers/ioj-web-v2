@@ -20,6 +20,7 @@ export default new Vuex.Store<RootState>({
     links: [
       { text: 'nav.home', to: '/', icon: 'mdi-home' },
       { text: 'nav.problem', to: '/p', icon: 'mdi-puzzle' },
+      { text: 'nav.submission', to: '/s', icon: 'mdi-puzzle' },
       // { text: "nav.group", to: "/g", icon: "mdi-account-group" },
       // { text: 'nav.contest', to: '/c', icon: 'mdi-feather' },
     ],

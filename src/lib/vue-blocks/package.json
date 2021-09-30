@@ -1,0 +1,25 @@
+{
+  "name": "vue-blocks",
+  "version": "1.0.0",
+  "description": "Vue2 dataflow graph editor",
+  "author": "Vladislav Fursov <ghostrussian@gmail.com>",
+  "private": false,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:docs": "rimraf ./docs/* && vue-cli-service build && mv ./dist/* ./docs/"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "deepmerge": "^4.2.2",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "rimraf": "^3.0.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

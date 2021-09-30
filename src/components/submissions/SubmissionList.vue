@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card
   v-card-title
-    | Problems
+    | Submissions
     v-spacer
     v-text-field(
       v-model='search',
@@ -17,7 +17,7 @@ v-card
     sort-by='status',
     :sort-desc='true',
     :headers='headers',
-    :items='problems',
+    :items='submissions',
     :page.sync='page',
     :search='search',
     :items-per-page='itemsPerPage',
@@ -46,7 +46,7 @@ v-card
     v-pagination(:total-visible='7', v-model='page', :length='pageCount')
 </template>
 <script>
-import { getProblems } from '@/api/problem';
+import { getSubmissions } from '@/api/submission';
 export default {
   data() {
     return {
@@ -55,50 +55,50 @@ export default {
       itemsPerPage: 15,
       search: '',
       loading: false,
-      problems: [],
+      submissions: [],
     };
   },
   computed: {
     headers() {
       return [
         {
-          text: this.$t('problem.status'),
+          text: this.$t('submission.status'),
           value: 'status',
           align: 'center',
           width: '120px',
         },
-        // { text: this.$t('problem.name'), value: 'name', width: '150px' },
-        { text: this.$t('problem.name'), value: 'name', width: '380px' },
+        // { text: this.$t('submission.name'), value: 'name', width: '150px' },
+        { text: this.$t('submission.name'), value: 'name', width: '380px' },
         // {
-        //   text: this.$t('problem.ratings'),
+        //   text: this.$t('submission.ratings'),
         //   value: 'ratings',
         //   align: 'center',
         //   width: '200px',
         // },
-        {
-          text: this.$t('problem.acceptance'),
-          value: 'likes',
-          align: 'center',
-          width: '120px',
-        },
-        {
-          text: this.$t('problem.submissions'),
-          value: 'useful',
-          align: 'center',
-          width: '140px',
-        },
         // {
-        //   text: this.$t('problem.esays'),
+        //   text: this.$t('submission.acceptance'),
+        //   value: 'likes',
+        //   align: 'center',
+        //   width: '120px',
+        // },
+        // {
+        //   text: this.$t('submission.submissions'),
+        //   value: 'useful',
+        //   align: 'center',
+        //   width: '140px',
+        // },
+        // {
+        //   text: this.$t('submission.esays'),
         //   value: 'easy',
         //   align: 'center',
         //   width: '120px',
         // },
       ];
     },
-    // problems() {
-    //   return this.rawproblems.map(problem => ({
-    //     ...problem,
-    //     status: this.statusproblems.indexOf(problem.name) > -1,
+    // submissions() {
+    //   return this.rawsubmissions.map(submission => ({
+    //     ...submission,
+    //     status: this.statussubmissions.indexOf(submission.name) > -1,
     //   }));
     // },
   },
@@ -106,12 +106,12 @@ export default {
     async fetch() {
       this.loading = true;
       try {
-        const res = await getProblems('');
-        // this.rawproblems = res.data;
-        // this.rawproblems.forEach(item => {
+        const res = await getSubmissions();
+        // this.rawsubmissions = res.data;
+        // this.rawsubmissions.forEach(item => {
         //   item.ratings /= 5;
         // });
-        this.problems = res;
+        this.submissions = res;
       } catch (err) {
         console.log(err);
       } finally {

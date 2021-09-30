@@ -1,80 +1,70 @@
 <template lang="pug">
-v-hover(v-slot:default="{ hover }")
-  v-card(
-    :class="`elevation-${hover ? 12 : 6}`"
-    style="background:white"
-  )
-    v-toolbar(
-      color="primary"
-      dark
-    )
-      v-toolbar-title {{ $t('page.signup') }}
+v-hover(v-slot:default='{ hover }')
+  v-card(:class='`elevation-${hover ? 12 : 6}`', style='background: white')
+    v-toolbar(color='primary', dark)
+      v-toolbar-title {{ $t("page.signup") }}
       v-spacer
-      v-btn(text to="/u/signin") {{ $t('page.signin') }}
-      v-btn(icon to="/")
+      v-btn(text, to='/u/signin') {{ $t("page.signin") }}
+      v-btn(icon, to='/')
         v-icon mdi-home
-      v-menu(open-on-hover offset-y)
-        template(v-slot:activator="{ on }")
-          v-btn(v-on="on" icon)
+      v-menu(open-on-hover, offset-y)
+        template(v-slot:activator='{ on }')
+          v-btn(v-on='on', icon)
             v-icon mdi-translate
         v-list
-          v-list-item(v-for="locale in locales" :key="locale.value" @click="setlocale(locale.value)")
+          v-list-item(
+            v-for='locale in locales',
+            :key='locale.value',
+            @click='setlocale(locale.value)'
+          )
             v-list-item-title {{ locale.text }}
     v-card-text.pt-4
-      v-form(
-        ref="form"
-        v-model="valid"
-        lazy-validation
-      )
+      v-form(ref='form', v-model='valid', lazy-validation)
         v-icon
         v-text-field(
-          v-model="username"
-          autocomplete="off"
-          prepend-icon="mdi-account"
-          required
-          filled
-          :label="$t('field.username')"
-          :rules="usernameRules"
-          @focus="onFocus"
+          v-model='username',
+          autocomplete='off',
+          prepend-icon='mdi-account',
+          required,
+          filled,
+          :label='$t("field.username")',
+          :rules='usernameRules',
+          @focus='onFocus'
         )
         v-text-field(
-          v-model="password"
-          autocomplete="new-password"
-          prepend-icon="mdi-lock"
-          type="password"
-          required
-          filled
-          :label="$t('field.password')"
-          :rules="passwordRules"
+          v-model='password',
+          autocomplete='new-password',
+          prepend-icon='mdi-lock',
+          type='password',
+          required,
+          filled,
+          :label='$t("field.password")',
+          :rules='passwordRules'
         )
         v-text-field(
-          v-model="rpassword"
-          autocomplete="new-password"
-          prepend-icon="mdi-lock"
-          type="password"
-          required
-          filled
-          :label="$t('field.password')"
-          :rules="rpasswordRules"
+          v-model='rpassword',
+          autocomplete='new-password',
+          prepend-icon='mdi-lock',
+          type='password',
+          required,
+          filled,
+          :label='$t("field.password")',
+          :rules='rpasswordRules'
         )
         v-text-field(
-          v-model="email"
-          prepend-icon="mdi-email"
-          required
-          filled
-          :label="$t('field.email')"
-          :rules="emailRules"
+          v-model='email',
+          prepend-icon='mdi-email',
+          required,
+          filled,
+          :label='$t("field.email")',
+          :rules='emailRules'
         )
     v-expand-transition
-      v-alert(v-show="toggle" :color="color" :icon="icon")
+      v-alert(v-show='toggle', :color='color', :icon='icon')
         div {{ message }}
     v-card-actions
       v-spacer
-      v-btn(
-        color="primary"
-        :disabled="!valid"
-        @click="onSubmit"
-      ) submit
+      v-btn(color='primary', :disabled='!valid', @click='onSubmit') submit
       v-spacer
 </template>
 
@@ -162,7 +152,7 @@ export default {
             password,
           });
           this.color = 'success';
-          this.icon = 'check_circle';
+          this.icon = 'mdi-check';
           this.message = 'success';
           this.toggleOn();
           setTimeout(() => {

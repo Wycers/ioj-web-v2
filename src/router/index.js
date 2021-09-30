@@ -41,6 +41,21 @@ export const constantRoutes = [
   //   component: () => import('@/views/problems/discussion.vue'),
   // },
   {
+    path: '/s/',
+    name: 'Submission List',
+    component: () => import('@/views/submissions/index.vue'),
+  },
+  {
+    path: '/s/:name',
+    name: 'Submission Detail',
+    component: () => import('@/views/submissions/detail.vue'),
+  },
+  {
+    path: '/process/',
+    name: 'Process Edit',
+    component: () => import('@/views/processes/index.vue'),
+  },
+  {
     path: '/c',
     name: 'Problem',
     component: () =>
