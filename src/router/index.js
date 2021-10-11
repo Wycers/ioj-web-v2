@@ -51,9 +51,9 @@ export const constantRoutes = [
     component: () => import('@/views/submissions/detail.vue'),
   },
   {
-    path: '/process/',
-    name: 'Process Edit',
-    component: () => import('@/views/processes/index.vue'),
+    path: '/b/:id',
+    name: 'Blueprints',
+    component: () => import('@/views/blueprints/index.vue'),
   },
   {
     path: '/c',
