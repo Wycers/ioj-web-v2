@@ -44,7 +44,7 @@
         <li :key="k" class="label">{{ type }}</li>
         <li
           v-for="(block, i) in filteredBlocks(type)"
-          :key="i"
+          :key="`li-${k}-${i}`"
           @click="addBlockContextMenu(block.name)"
         >
           {{ block.title || block.name }}
