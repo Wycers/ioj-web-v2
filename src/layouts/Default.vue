@@ -2,47 +2,35 @@
 v-app
   v-app-bar(app)
     v-toolbar-title
-      router-link.headline(to="/" ,style="text-decoration-line:none;color : black") Infinity OJ
-    div.flex-grow-1
+      router-link.headline(
+        to="/",
+        style='text-decoration-line: none; color: black'
+      ) Infinity OJ
+    .flex-grow-1
     v-toolbar-items
-      v-btn(text to="/p") {{ $t("toolbar.problem") }}
-      v-btn(text to="/s") {{ $t("toolbar.status") }}
-      v-btn(text to="/c") {{ $t("toolbar.contest") }}
-      v-btn(text to="/d") {{ $t("toolbar.discussion") }}
+      v-btn(text, to='/p') {{ $t("toolbar.problem") }}
+      v-btn(text, to='/s') {{ $t("toolbar.status") }}
+      v-btn(text, to='/c') {{ $t("toolbar.contest") }}
+      v-btn(text, to='/d') {{ $t("toolbar.discussion") }}
     v-spacer
-    div(v-if="!!nickname")
-      v-avatar(
-        color="grey lighten-4"
-        :size="44"
-      )
-        img(
-          :src="avatar"
-          alt="avatar"
-        )
+    div(v-if='!!nickname')
+      v-avatar(color='grey lighten-4', :size='44')
+        img(:src='avatar', alt='avatar')
       v-menu(offset-y)
-        template(v-slot:activator="{ on }")
-          v-btn(
-            v-on="on"
-            text
-          ) {{ nickname }}
+        template(v-slot:activator='{ on }')
+          v-btn(v-on='on', text) {{ nickname }}
         v-list
-          v-list-item(to="/profile")
-            v-list-item-title {{ $t('toolbar.profile') }}
+          v-list-item(to='/profile')
+            v-list-item-title {{ $t("toolbar.profile") }}
           v-divider
-          v-list-item(@click="logout")
-            v-list-item-title {{ $t('toolbar.logout') }}
+          v-list-item(@click='logout')
+            v-list-item-title {{ $t("toolbar.logout") }}
 
     v-toolbar-items.hidden-sm-and-down(v-else)
-      v-btn(
-        text
-        to="/u/signin"
-      ) Sign in
-      v-btn(
-        text
-        to="/u/signup"
-      ) Sign up
-  v-content
-    transition(name="fade" mode="out-in")
+      v-btn(text, to='/u/signin') Sign in
+      v-btn(text, to='/u/signup') Sign up
+  v-main
+    transition(name='fade', mode='out-in')
       router-view
 </template>
 <script>

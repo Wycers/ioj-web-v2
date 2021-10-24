@@ -1,11 +1,10 @@
 <template>
   <v-card
-    width="90%"
+    min-height="80vh"
+    rounded="lg"
     max-width="1024"
-    class="mx-auto my-5"
     :class="cardClass"
     tag="article"
-    rounded="lg"
   >
     <v-card-title class="justify-center"> {{ title }} </v-card-title>
     <!-- <v-card-title class="justify-center center">
@@ -46,17 +45,12 @@ const test = `
 
 `;
 
-import { getPage } from '@/api/problem';
 export default {
-  // components: {
-  //   Tag,
-  //   PostTime
-  // },
   props: {
-    name: {
-      type: String,
+    page: {
+      type: Object,
       required: true,
-      default: 'hello-world',
+      default: () => ({}),
     },
     shadowZ: Number,
     layout: {
@@ -65,19 +59,6 @@ export default {
       default: 'layout',
     },
   },
-  data: function() {
-    return {
-      title: '',
-      description: '',
-      inputFormat: '',
-      outputFormat: '',
-      example: test,
-      hintAndLimit: '',
-    };
-  },
-  mounted() {
-    this.getPage();
-  },
   computed: {
     cardClass() {
       return [
@@ -85,32 +66,24 @@ export default {
         `${this.layout}-card`,
       ];
     },
-  },
-  methods: {
-    async getPage() {
-      try {
-        const res = await getPage(this.name);
-        this.title = res.title;
-        this.description = res.description;
-        this.inputFormat = res.input_format;
-        this.outputFormat = res.output_format;
-        this.example = res.example;
-        this.hintAndLimit = res.hint_and_limit;
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
+    title() {
+      return this.page.title;
     },
-    // clickRank() {
-    //   this.$router.push({
-    //     name: 'problemRank',
-    //   });
-    // },
-    // clickDisscussion() {
-    //   this.$router.push({
-    //     name: 'problemDiscussion',
-    //   });
-    // },
+    description() {
+      return this.page.description;
+    },
+    inputFormat() {
+      return this.page.input_format;
+    },
+    outputFormat() {
+      return this.page.output_format;
+    },
+    example() {
+      return this.page.example;
+    },
+    hintAndLimit() {
+      return this.page.hint_and_limit;
+    },
   },
 };
 </script>

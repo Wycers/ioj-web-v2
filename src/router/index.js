@@ -31,7 +31,7 @@ export const constantRoutes = [
     component: () => import('@/views/problems/detail.vue'),
   },
   {
-    path: '/p/:name/ranklist',
+    path: '/p/:name/ranklist/:id',
     name: 'problemRank',
     component: () => import('@/views/problems/ranklist.vue'),
   },

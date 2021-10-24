@@ -1,9 +1,9 @@
 <template>
-  <v-content id="home" class="pb-0">
+  <v-main id="home" class="pb-0">
     <v-slide-y-reverse-transition>
       <router-view v-show="show" />
     </v-slide-y-reverse-transition>
-  </v-content>
+  </v-main>
 </template>
 <script lang="ts">
 import Vue from 'vue';
