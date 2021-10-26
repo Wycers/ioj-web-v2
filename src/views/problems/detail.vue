@@ -3,9 +3,15 @@
     <v-container>
       <v-row>
         <v-col>
-          <PostCard :page="page" :shadowZ="14" :layout="'post'"></PostCard>
+          <PostCard
+            v-if="!submissionToggle"
+            :page="page"
+            :shadowZ="14"
+            :layout="'post'"
+          ></PostCard>
+          <Upload v-else> </Upload>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <v-sheet rounded="lg">
             <v-list color="transparent">
               <v-subheader>Ranklists</v-subheader>
@@ -24,16 +30,16 @@
 
               <v-divider class="my-2"></v-divider>
 
-              <!-- <v-list-item
-                link
-                color="grey lighten-4"
-              >
-                <v-list-item-content>
+              <v-subheader>Submit</v-subheader>
+              <v-list-item link color="grey lighten-4">
+                <v-list-item-content
+                  @click="submissionToggle = !submissionToggle"
+                >
                   <v-list-item-title>
-                    Refresh
+                    {{ submissionToggle ? 'Exit' : 'Enter' }}
                   </v-list-item-title>
                 </v-list-item-content>
-              </v-list-item> -->
+              </v-list-item>
             </v-list>
           </v-sheet>
         </v-col>
@@ -43,13 +49,13 @@
 </template>
 <script>
 import PostCard from '@/components/problems/PostCard.vue';
-// import Upload from '@/components/problems/Upload.vue';
+import Upload from '@/components/problems/Upload.vue';
 // import CodeEditor from '@/components/CodeEditor.vue';
 import { getProblem, getPage } from '@/api/problem';
 export default {
   components: {
     PostCard,
-    // Upload,
+    Upload,
     // CodeEditor,
   },
 
@@ -58,6 +64,7 @@ export default {
       codeValue: `var a = 10;`,
       problem: {},
       page: {},
+      submissionToggle: false,
     };
   },
   computed: {

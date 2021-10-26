@@ -10,11 +10,13 @@ export function getVolume(volumeName: string): Record<string, any> {
 
 export function createFile(
   volumeName: string,
-  formData: FormData
+  formData: FormData,
+  onUploadProgress: (progressEvent: any) => void
 ): Record<string, any> {
   return http.post(`/volume/${volumeName}/file`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
+    onUploadProgress,
   });
 }

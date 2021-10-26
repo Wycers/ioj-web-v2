@@ -1,15 +1,57 @@
 <template>
   <v-card
-    width="90%"
+    min-height="80vh"
+    rounded="lg"
     max-width="1024"
-    class="mx-auto my-5"
     :class="cardClass"
     tag="article"
-    rounded="lg"
   >
-    <v-card-title class="justify-center"> Upload </v-card-title>
+    <v-card-title class="justify-center"> Upload & Submit</v-card-title>
 
     <v-card-text class="content custom">
+      <div v-if="currentFile">
+        <div>
+          <v-progress-linear
+            v-model="progress"
+            color="light-blue"
+            height="25"
+            reactive
+          >
+            <strong>{{ progress }} %</strong>
+          </v-progress-linear>
+        </div>
+      </div>
+
+      <v-row no-gutters justify="center" align="center">
+        <v-col cols="8">
+          <v-file-input
+            show-size
+            label="File input"
+            @change="selectFile"
+          ></v-file-input>
+        </v-col>
+
+        <v-col cols="4" class="pl-2">
+          <v-btn color="success" dark small @click="upload">
+            Upload
+            <v-icon right dark>mdi-cloud-upload</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-alert v-if="message" border="left" color="blue-grey" dark>
+        {{ message }}
+      </v-alert>
+
+      <v-list v-if="fileInfos.length > 0">
+        <v-subheader>List of Files</v-subheader>
+        <v-list-item-group color="primary">
+          <v-list-item v-for="(file, index) in fileInfos" :key="index">
+            <a :href="file.url">{{ file.name }}</a>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
       <div class="large-12 medium-12 small-12 cell">
         <label
           >Files
@@ -22,6 +64,7 @@
           />
         </label>
       </div>
+
       <div class="large-12 medium-12 small-12 cell">
         <div v-for="(file, key) in files" :key="key" class="file-listing">
           {{ file.name }}
@@ -37,26 +80,7 @@
         <button v-on:click="submitFiles()">Submit</button>
       </div>
     </v-card-text>
-    <v-dialog v-model="dialog" persistent max-width="290">
-      <v-card>
-        <v-card-title class="text-h5">
-          Use Google's location service?
-        </v-card-title>
-        <v-card-text
-          >Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">
-            Disagree
-          </v-btn>
-          <v-btn color="green darken-1" text @click="dialog = false">
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <ConfirmDialog ref="confirm" />
   </v-card>
 </template>
 
@@ -79,7 +103,6 @@ span.remove-file {
 <script>
 import { createVolume, getVolume, createFile } from '@/api/volume';
 import { createSubmission } from '@/api/submission';
-import { get } from 'js-cookie';
 
 export default {
   props: {
@@ -87,6 +110,10 @@ export default {
       type: String,
       default: '',
     },
+  },
+
+  components: {
+    ConfirmDialog: import('@/components/common/ConfirmDialog.vue'),
   },
 
   /*
@@ -98,6 +125,11 @@ export default {
       shadowZ: '14',
       layout: 'post',
       currentVolumeName: '',
+      currentFile: undefined,
+      progress: 0,
+      message: '',
+
+      fileInfos: [],
     };
   },
 
@@ -137,34 +169,10 @@ export default {
     /*
         Submits files to the server
       */
-    async submitFiles() {
-      if (this.files.length === 0) {
-        return;
-      }
-
+    async submit() {
       try {
         if (this.currentVolumeName === '') {
-          const volumeData = await createVolume();
-          const volumeName = volumeData?.name || '';
-
-          if (volumeName === '') {
-            return;
-          }
-          this.currentVolumeName = volumeName;
-        }
-        for (let i = 0; i < this.files.length; i++) {
-          const file = this.files[i];
-          const formData = new FormData();
-          formData.append('file', file, file.filename);
-          const volumeFileData = await createFile(
-            this.currentVolumeName,
-            formData
-          );
-          const volumeName = volumeFileData?.name || '';
-          if (volumeName === '') {
-            return;
-          }
-          this.currentVolumeName = volumeName;
+          console.log('empty volume name');
         }
 
         const submitRes = await createSubmission(
@@ -197,6 +205,86 @@ export default {
       */
     removeFile(key) {
       this.files.splice(key, 1);
+    },
+
+    selectFile(file) {
+      this.progress = 0;
+      this.currentFile = file;
+    },
+
+    async upload() {
+      if (!this.currentFile) {
+        this.message = 'Please select a file!';
+        return;
+      }
+
+      this.message = '';
+
+      try {
+        if (this.currentVolumeName === '') {
+          const volumeData = await createVolume();
+          const volumeName = volumeData?.name || '';
+
+          if (volumeName === '') {
+            return;
+          }
+          this.currentVolumeName = volumeName;
+        }
+
+        const formData = new FormData();
+        formData.append('file', this.currentFile, this.currentFile.filename);
+        const volumeFileData = await createFile(
+          this.currentVolumeName,
+          formData,
+          event => {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          }
+        );
+        const volumeName = volumeFileData?.name || '';
+        if (volumeName === '') {
+          return;
+        }
+        this.currentVolumeName = volumeName;
+
+        this.fileInfos.push({
+          name: this.currentFile.filename,
+        });
+      } catch (err) {
+        this.progress = 0;
+        this.message = 'Could not upload the file!';
+        this.currentFile = undefined;
+      }
+
+      // UploadService.upload(this.currentFile, event => {
+      //   this.progress = Math.round((100 * event.loaded) / event.total);
+      // })
+      //   .then(response => {
+      //     this.message = response.data.message;
+      //     return UploadService.getFiles();
+      //   })
+      //   .then(files => {
+      //     this.fileInfos = files.data;
+      //   })
+      //   .catch(() => {
+      //     this.progress = 0;
+      //     this.message = 'Could not upload the file!';
+      //     this.currentFile = undefined;
+      //   });
+    },
+
+    async delRecord() {
+      if (
+        await this.$refs.confirm.open(
+          'Confirm',
+          'Are you sure you want to delete this record?'
+        )
+      ) {
+        this.deleteRecord();
+      }
+    },
+
+    deleteRecord() {
+      console.log('Record deleted.');
     },
   },
 };
