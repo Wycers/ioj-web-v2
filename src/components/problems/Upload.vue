@@ -43,43 +43,32 @@
         {{ message }}
       </v-alert>
 
-      <v-list v-if="fileInfos.length > 0">
+      <v-list>
         <v-subheader>List of Files</v-subheader>
-        <v-list-item-group color="primary">
+        <v-list-item-group color="primary" v-if="fileInfos.length > 0">
           <v-list-item v-for="(file, index) in fileInfos" :key="index">
             <a :href="file.url">{{ file.name }}</a>
           </v-list-item>
         </v-list-item-group>
+        <v-list-item v-else>
+          Empty
+        </v-list-item>
       </v-list>
-
-      <div class="large-12 medium-12 small-12 cell">
-        <label
-          >Files
-          <input
-            type="file"
-            id="files"
-            ref="files"
-            multiple
-            v-on:change="handleFilesUpload()"
-          />
-        </label>
-      </div>
-
-      <div class="large-12 medium-12 small-12 cell">
-        <div v-for="(file, key) in files" :key="key" class="file-listing">
-          {{ file.name }}
-          <span class="remove-file" v-on:click="removeFile(key)">Remove</span>
-        </div>
-      </div>
-      <br />
-      <div class="large-12 medium-12 small-12 cell">
-        <button v-on:click="addFiles()">Add Files</button>
-      </div>
-      <br />
-      <div class="large-12 medium-12 small-12 cell">
-        <button v-on:click="submitFiles()">Submit</button>
-      </div>
     </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        rounded
+        color="primary"
+        :disabled="currentVolumeName === ''"
+        @click="submitConfirm"
+      >
+        Submit
+      </v-btn>
+      <v-spacer></v-spacer>
+    </v-card-actions>
+
     <ConfirmDialog ref="confirm" />
   </v-card>
 </template>
@@ -101,19 +90,20 @@ span.remove-file {
 </style>
 
 <script>
+import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
 import { createVolume, getVolume, createFile } from '@/api/volume';
 import { createSubmission } from '@/api/submission';
 
 export default {
+  components: {
+    ConfirmDialog,
+  },
+
   props: {
     name: {
       type: String,
       default: '',
     },
-  },
-
-  components: {
-    ConfirmDialog: import('@/components/common/ConfirmDialog.vue'),
   },
 
   /*
@@ -165,27 +155,6 @@ export default {
     addFiles() {
       this.$refs.files.click();
     },
-
-    /*
-        Submits files to the server
-      */
-    async submit() {
-      try {
-        if (this.currentVolumeName === '') {
-          console.log('empty volume name');
-        }
-
-        const submitRes = await createSubmission(
-          this.name,
-          this.currentVolumeName
-        );
-        const submissionId = submitRes.submission.submissionId;
-        this.$router.push(`/s/${submissionId}`);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-
     /*
         Handles the uploading of files
       */
@@ -232,7 +201,8 @@ export default {
         }
 
         const formData = new FormData();
-        formData.append('file', this.currentFile, this.currentFile.filename);
+
+        formData.append('file', this.currentFile, this.currentFile.name);
         const volumeFileData = await createFile(
           this.currentVolumeName,
           formData,
@@ -247,44 +217,37 @@ export default {
         this.currentVolumeName = volumeName;
 
         this.fileInfos.push({
-          name: this.currentFile.filename,
+          name: this.currentFile.name,
+          url: '?',
         });
       } catch (err) {
         this.progress = 0;
         this.message = 'Could not upload the file!';
         this.currentFile = undefined;
       }
-
-      // UploadService.upload(this.currentFile, event => {
-      //   this.progress = Math.round((100 * event.loaded) / event.total);
-      // })
-      //   .then(response => {
-      //     this.message = response.data.message;
-      //     return UploadService.getFiles();
-      //   })
-      //   .then(files => {
-      //     this.fileInfos = files.data;
-      //   })
-      //   .catch(() => {
-      //     this.progress = 0;
-      //     this.message = 'Could not upload the file!';
-      //     this.currentFile = undefined;
-      //   });
     },
 
-    async delRecord() {
-      if (
-        await this.$refs.confirm.open(
-          'Confirm',
-          'Are you sure you want to delete this record?'
-        )
-      ) {
-        this.deleteRecord();
+    async submitConfirm() {
+      if (await this.$refs.confirm.open('Confirm', 'Are you sure to submit?')) {
+        this.submit();
       }
     },
 
-    deleteRecord() {
-      console.log('Record deleted.');
+    async submit() {
+      try {
+        if (this.currentVolumeName === '') {
+          console.log('empty volume name');
+        }
+
+        const submitRes = await createSubmission(
+          this.name,
+          this.currentVolumeName
+        );
+        const submissionId = submitRes.submission.submissionId;
+        this.$router.push(`/s/${submissionId}`);
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

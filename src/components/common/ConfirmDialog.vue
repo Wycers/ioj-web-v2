@@ -40,7 +40,8 @@
 
 <script>
 export default {
-  name: 'ConfirmDlg',
+  name: 'ConfirmDialog',
+
   data() {
     return {
       dialog: false,

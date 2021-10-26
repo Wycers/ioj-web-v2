@@ -9,7 +9,7 @@
             :shadowZ="14"
             :layout="'post'"
           ></PostCard>
-          <Upload v-else> </Upload>
+          <Upload v-else :name="name"> </Upload>
         </v-col>
         <v-col cols="3">
           <v-sheet rounded="lg">
@@ -32,11 +32,15 @@
 
               <v-subheader>Submit</v-subheader>
               <v-list-item link color="grey lighten-4">
-                <v-list-item-content
-                  @click="submissionToggle = !submissionToggle"
-                >
-                  <v-list-item-title>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-if="!!username"
+                    @click="submissionToggle = !submissionToggle"
+                  >
                     {{ submissionToggle ? 'Exit' : 'Enter' }}
+                  </v-list-item-title>
+                  <v-list-item-title v-else>
+                    Sign in to submit {{ username }}
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -52,6 +56,7 @@ import PostCard from '@/components/problems/PostCard.vue';
 import Upload from '@/components/problems/Upload.vue';
 // import CodeEditor from '@/components/CodeEditor.vue';
 import { getProblem, getPage } from '@/api/problem';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     PostCard,
@@ -68,6 +73,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      username: 'user/username',
+    }),
+
     name() {
       return this.$route.params.name;
     },
