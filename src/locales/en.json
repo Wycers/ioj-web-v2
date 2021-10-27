@@ -82,6 +82,8 @@
         "logout": "Logout"
     },
     "submission": {
+        "createdAt": "Created At",
+        "score": "Score",
         "status": "Status",
         "submittedAt": "Time",
         "name": "Name"

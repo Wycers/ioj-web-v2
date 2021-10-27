@@ -13,7 +13,7 @@ v-card
   v-data-table.elevation-1(
     loading-text='Loading... Please wait',
     hide-default-footer='',
-    item-key='name',
+    item-key='submissionId',
     sort-by='status',
     :sort-desc='true',
     :headers='headers',
@@ -33,20 +33,26 @@ v-card
     //- template(v-slot:header.easy='{ header }')
     //-   v-icon(color='green') fa-fish
     //-   span {{ header.text }}
+    template(v-slot:item.createdAt='{ item }')
+      span {{ item.created_at | moment }}
     template(v-slot:item.name='{ item }')
-      router-link(:to='`/p/${item.name}`') {{ item.title }}
+      router-link(:to='`/s/${item.submissionId}`') {{ item.submissionId }}
     template(v-slot:item.status='{ item }')
-      v-simple-checkbox(
-        :value='item.status',
-        :ripple='false',
-        color='primary',
-        @input='check(item)'
-      )
+      //- v-simple-checkbox(
+      //-   :value='item.status',
+      //-   :ripple='false',
+      //-   color='primary',
+      //-   @input='check(item)'
+      //- )
+      span {{ statusOf(item) }}
+    template(v-slot:item.score='{ item }')
+      span {{ scoreOf(item) }}
   .text-center.pt-2
     v-pagination(:total-visible='7', v-model='page', :length='pageCount')
 </template>
 <script>
 import { getSubmissions } from '@/api/submission';
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -61,14 +67,36 @@ export default {
   computed: {
     headers() {
       return [
+        // {
+        //   text: this.$t('submission.status'),
+        //   value: 'status',
+        //   align: 'center',
+        //   width: '120px',
+        // },
+        // { text: this.$t('submission.name'), value: 'name', width: '150px' },
+        {
+          text: this.$t('submission.createdAt'),
+          value: 'createdAt',
+          width: '240px',
+        },
+        {
+          text: this.$t('submission.name'),
+          value: 'name',
+          width: '380px',
+          sortable: false,
+        },
         {
           text: this.$t('submission.status'),
           value: 'status',
-          align: 'center',
           width: '120px',
+          sortable: false,
         },
-        // { text: this.$t('submission.name'), value: 'name', width: '150px' },
-        { text: this.$t('submission.name'), value: 'name', width: '380px' },
+        {
+          text: this.$t('submission.score'),
+          value: 'score',
+          width: '120px',
+          sortable: false,
+        },
         // {
         //   text: this.$t('submission.ratings'),
         //   value: 'ratings',
@@ -102,7 +130,31 @@ export default {
     //   }));
     // },
   },
+  filters: {
+    moment: function(date) {
+      return moment(date).format('MMM Do YY, hh:mm:ss');
+    },
+  },
   methods: {
+    scoreOf(item) {
+      if (item.judgements) {
+        return item.judgements.length === 0 || item.judgements[0].score === -1
+          ? '-'
+          : item.judgements[0].score;
+      }
+      return '-';
+    },
+    statusOf(item) {
+      if (item.judgements) {
+        return item.judgements.length === 0
+          ? 'Waiting'
+          : item.judgements[0].status;
+      }
+      return 'Waiting';
+    },
+    moment: function() {
+      return moment();
+    },
     async fetch() {
       this.loading = true;
       try {
