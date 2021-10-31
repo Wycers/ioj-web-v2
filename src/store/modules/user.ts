@@ -71,7 +71,7 @@ const actions: ActionTree<UserState, RootState> = {
   async getRole({ commit }): Promise<string[]> {
     try {
       const res = await getRole();
-      const role = res.roles;
+      const role = res.roles || [];
       commit('setRole', role);
       return role;
     } catch (err) {
