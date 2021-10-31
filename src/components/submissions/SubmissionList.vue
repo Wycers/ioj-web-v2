@@ -130,11 +130,13 @@ export default {
     //   }));
     // },
   },
+
   filters: {
     moment: function(date) {
       return moment(date).format('MMM Do YY, hh:mm:ss');
     },
   },
+
   methods: {
     scoreOf(item) {
       if (item.judgements) {

@@ -18,3 +18,7 @@ export function getSubmissions(page = 1, pageSize = 15): Record<string, any> {
     },
   });
 }
+
+export function getSubmission(name: string): Record<string, any> {
+  return http.get(`/submission/${name}`);
+}

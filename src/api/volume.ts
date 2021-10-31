@@ -20,3 +20,17 @@ export function createFile(
     onUploadProgress,
   });
 }
+
+export function getVolumeFile(
+  volumeName: string,
+  filename: string,
+  onDownloadProgress: (progressEvent: any) => void
+) {
+  return http.get(`/volume/${volumeName}/file`, {
+    params: {
+      filename,
+    },
+    responseType: 'blob',
+    onDownloadProgress,
+  });
+}

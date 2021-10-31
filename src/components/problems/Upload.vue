@@ -43,17 +43,7 @@
         {{ message }}
       </v-alert>
 
-      <v-list>
-        <v-subheader>List of Files</v-subheader>
-        <v-list-item-group color="primary" v-if="fileInfos.length > 0">
-          <v-list-item v-for="(file, index) in fileInfos" :key="index">
-            <a :href="file.url">{{ file.name }}</a>
-          </v-list-item>
-        </v-list-item-group>
-        <v-list-item v-else>
-          Empty
-        </v-list-item>
-      </v-list>
+      <volume-card :name="currentVolumeName"></volume-card>
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
@@ -91,12 +81,14 @@ span.remove-file {
 
 <script>
 import ConfirmDialog from '@/components/common/ConfirmDialog.vue';
-import { createVolume, getVolume, createFile } from '@/api/volume';
+import { createVolume, createFile } from '@/api/volume';
 import { createSubmission } from '@/api/submission';
+import VolumeCard from '../volumes/VolumeCard.vue';
 
 export default {
   components: {
     ConfirmDialog,
+    VolumeCard,
   },
 
   props: {
@@ -129,19 +121,6 @@ export default {
         this.shadowZ ? `elevation-${this.shadowZ}` : '',
         `${this.layout}-card`,
       ];
-    },
-  },
-
-  watch: {
-    async currentVolumeName() {
-      const res = [];
-      try {
-        const resp = await getVolume(this.currentVolumeName);
-        console.log(resp);
-      } catch (err) {
-        console.log(err);
-      }
-      return res;
     },
   },
 
