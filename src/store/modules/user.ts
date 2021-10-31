@@ -48,17 +48,12 @@ const mutations: MutationTree<UserState> = {
 
 const actions: ActionTree<UserState, RootState> = {
   async recover({ commit }) {
-    try {
-      const res = await recover();
-      console.log('recover', res);
-      const user: User = {
-        username: res.name,
-        role: null,
-      };
-      commit('login', user);
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await recover();
+    const user: User = {
+      username: res.name,
+      role: null,
+    };
+    commit('login', user);
   },
   async login({ dispatch }, { username, password }) {
     await signin(username, password);
@@ -69,15 +64,10 @@ const actions: ActionTree<UserState, RootState> = {
     commit('logout');
   },
   async getRole({ commit }): Promise<string[]> {
-    try {
-      const res = await getRole();
-      const role = res.roles || [];
-      commit('setRole', role);
-      return role;
-    } catch (err) {
-      console.log(err);
-    }
-    return [];
+    const res = await getRole();
+    const role = res.roles || [];
+    commit('setRole', role);
+    return role;
   },
 };
 
