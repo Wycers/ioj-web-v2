@@ -39,7 +39,7 @@
                   >
                     {{ submissionToggle ? 'Exit' : 'Enter' }}
                   </v-list-item-title>
-                  <v-list-item-title v-else>
+                  <v-list-item-title v-else @click="goToSignInPage">
                     Sign in to submit {{ username }}
                   </v-list-item-title>
                 </v-list-item-content>
@@ -105,6 +105,12 @@ export default {
     setData(problem, page) {
       this.problem = problem;
       this.page = page;
+    },
+
+    goToSignInPage() {
+      this.$router.push(
+        `/u/signin?redirect=${this.$router.history.current.path}`
+      );
     },
   },
 };
