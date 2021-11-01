@@ -1,11 +1,28 @@
 <template>
   <v-list>
-    <v-subheader>List of Files</v-subheader>
+    <v-list-item @click="downloadDirectory">
+      <v-list-item-title>Download All</v-list-item-title>
+    </v-list-item>
+    <v-subheader
+      >List of Files
+      <!-- <v-spacer></v-spacer>
+      <v-btn
+        v-if="name != ''"
+        :loading="loading"
+        :disabled="loading"
+        color="blue-grey"
+        class="ma-2 white--text"
+        flat
+        @click="downloadDirectory()"
+      >
+        Download
+      </v-btn> -->
+    </v-subheader>
     <v-list-item-group color="primary" v-if="fileInfos.length > 0">
       <v-list-item
         v-for="(file, index) in fileInfos"
         :key="index"
-        @click="download(file, index)"
+        @click="downloadFile(file, index)"
       >
         <v-list-item-title>{{ file.name }}</v-list-item-title>
         <v-progress-circular
@@ -21,7 +38,7 @@
   </v-list>
 </template>
 <script>
-import { getVolume, getVolumeFile } from '@/api/volume';
+import { getVolume, getVolumeDirectory, getVolumeFile } from '@/api/volume';
 export default {
   name: 'VolumeCard',
 
@@ -37,6 +54,8 @@ export default {
       volume: {},
       progressMap: {},
       fileInfos: [],
+
+      loading: false,
     };
   },
 
@@ -58,7 +77,7 @@ export default {
   },
 
   methods: {
-    download(file, index) {
+    downloadFile(file, index) {
       // alert(file);
       this.fileInfos[index].progress = 0;
       getVolumeFile(this.name, file.name, event => {
@@ -77,8 +96,29 @@ export default {
           fileLink.click();
         })
         .catch(console.error);
+    },
 
-      // window.location.href = `/api/v1/volume/${this.name}/file?filename=${file.name}`;
+    downloadDirectory() {
+      this.loading = true;
+
+      const filename = `${this.name}.zip`;
+
+      getVolumeDirectory(this.name, '/', event => {
+        console.log(event);
+      })
+        .then(response => {
+          const fileURL = window.URL.createObjectURL(new Blob([response]));
+          const fileLink = document.createElement('a');
+
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', filename);
+          document.body.appendChild(fileLink);
+
+          fileLink.click();
+        })
+        .catch(console.error);
+
+      this.loading = false;
     },
   },
 };

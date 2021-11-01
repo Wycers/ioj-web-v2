@@ -34,3 +34,17 @@ export function getVolumeFile(
     onDownloadProgress,
   });
 }
+
+export function getVolumeDirectory(
+  volumeName: string,
+  dirname: string,
+  onDownloadProgress: (progressEvent: any) => void
+) {
+  return http.get(`/volume/${volumeName}/directory`, {
+    params: {
+      dirname,
+    },
+    responseType: 'blob',
+    onDownloadProgress,
+  });
+}
