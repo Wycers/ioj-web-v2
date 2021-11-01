@@ -61,7 +61,7 @@ export default {
 
   watch: {
     async name() {
-      console.log('name changed', this.name);
+      // console.log('name changed', this.name);
       try {
         const resp = await getVolume(this.name);
         this.volume = resp;
@@ -71,7 +71,7 @@ export default {
             progress: -1,
           })) || [];
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
   },
@@ -84,18 +84,17 @@ export default {
         this.fileInfos[index].progress = Math.round(
           (100 * event.loaded) / event.total
         );
-      })
-        .then(response => {
-          const fileURL = window.URL.createObjectURL(new Blob([response]));
-          const fileLink = document.createElement('a');
+      }).then(response => {
+        const fileURL = window.URL.createObjectURL(new Blob([response]));
+        const fileLink = document.createElement('a');
 
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', file.name);
-          document.body.appendChild(fileLink);
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', file.name);
+        document.body.appendChild(fileLink);
 
-          fileLink.click();
-        })
-        .catch(console.error);
+        fileLink.click();
+      });
+      // .catch(console.error);
     },
 
     downloadDirectory() {
@@ -104,19 +103,18 @@ export default {
       const filename = `${this.name}.zip`;
 
       getVolumeDirectory(this.name, '/', event => {
-        console.log(event);
-      })
-        .then(response => {
-          const fileURL = window.URL.createObjectURL(new Blob([response]));
-          const fileLink = document.createElement('a');
+        // console.log(event);
+      }).then(response => {
+        const fileURL = window.URL.createObjectURL(new Blob([response]));
+        const fileLink = document.createElement('a');
 
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', filename);
-          document.body.appendChild(fileLink);
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', filename);
+        document.body.appendChild(fileLink);
 
-          fileLink.click();
-        })
-        .catch(console.error);
+        fileLink.click();
+      });
+      // .catch(console.error);
 
       this.loading = false;
     },
