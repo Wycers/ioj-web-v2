@@ -37,7 +37,7 @@ v-hover(v-slot:default='{ hover }')
           type='password',
           required,
           filled,
-          :label='$t("field.password")',
+          :label='$t("field.old-password")',
           :rules='passwordRules'
         )
         v-text-field(
@@ -47,7 +47,7 @@ v-hover(v-slot:default='{ hover }')
           type='password',
           required,
           filled,
-          :label='$t("field.password")',
+          :label='$t("field.new-password")',
           :rules='passwordRules'
         )
         v-text-field(
@@ -57,7 +57,7 @@ v-hover(v-slot:default='{ hover }')
           type='password',
           required,
           filled,
-          :label='$t("field.password")',
+          :label='$t("field.new-repassword")',
           :rules='rpasswordRules'
         )
     v-expand-transition
