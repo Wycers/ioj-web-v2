@@ -26,6 +26,17 @@ export function signup(
   });
 }
 
+export function updateCredential(
+  username: string,
+  oldPassword: string,
+  newPassword: string
+): Record<string, any> {
+  return http.put(`/account/${username}/credential/application`, {
+    oldPassword,
+    newPassword,
+  });
+}
+
 export function signout() {
   return http.delete('/session/principal');
 }

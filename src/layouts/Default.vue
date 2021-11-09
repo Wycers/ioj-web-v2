@@ -3,7 +3,7 @@ v-app
   v-app-bar(app)
     v-toolbar-title
       router-link.headline(
-        to="/",
+        to='/',
         style='text-decoration-line: none; color: black'
       ) Infinity OJ
     .flex-grow-1
@@ -20,8 +20,8 @@ v-app
         template(v-slot:activator='{ on }')
           v-btn(v-on='on', text) {{ nickname }}
         v-list
-          v-list-item(to='/profile')
-            v-list-item-title {{ $t("toolbar.profile") }}
+          v-list-item(to='/credential/reset')
+            v-list-item-title {{ $t("toolbar.reset") }}
           v-divider
           v-list-item(@click='logout')
             v-list-item-title {{ $t("toolbar.logout") }}

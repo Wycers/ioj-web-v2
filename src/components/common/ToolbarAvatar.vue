@@ -14,8 +14,8 @@ v-menu(offset-y, open-on-hover)
       :item='route',
       :base-path='route.path'
     )
-    v-list-item(to='/profile')
-      v-list-item-title {{ $t("nav.profile") }}
+    v-list-item(to='/credential/reset')
+      v-list-item-title {{ $t("nav.reset") }}
     v-divider
     v-list-item(@click='logout')
       v-list-item-title {{ $t("nav.logout") }}

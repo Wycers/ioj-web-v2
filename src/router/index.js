@@ -90,14 +90,25 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  // {
+  //   path: '/u/preference',
+  //   component: () => import(`@/layouts/Account.vue`),
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/users/Preference.vue'),
+  //       name: 'preference',
+  //     },
+  //   ],
+  // },
   {
-    path: '/u/preference',
+    path: '/credential/reset',
     component: () => import(`@/layouts/Account.vue`),
     children: [
       {
         path: '',
-        component: () => import('@/views/users/Preference.vue'),
-        name: 'preference',
+        component: () => import('@/views/users/Reset.vue'),
+        name: 'reset',
       },
     ],
   },

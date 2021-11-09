@@ -2,7 +2,8 @@
     "locale": "English",
     "page": {
         "signin": "Sign in",
-        "signup": "Sign up"
+        "signup": "Sign up",
+        "reset": "Reset Password"
     },
     "sex": {
         "male": "Male",
@@ -29,7 +30,6 @@
             "hide_QQ": "hide the QQ",
             "hide_bio": "hide the bio",
             "hide_gender": "hide the gender"
-
         },
         "username": "Username",
         "password": "Password",
@@ -79,7 +79,8 @@
         "contest": "Contest",
         "discussion": "Discussion",
         "profile": "Profile",
-        "logout": "Logout"
+        "logout": "Logout",
+        "reset": "Reset Password"
     },
     "submission": {
         "createdAt": "Created At",
