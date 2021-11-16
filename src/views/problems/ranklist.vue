@@ -9,6 +9,7 @@ v-layout(row, wrap)
         :sort-by='sortBy',
         :sort-desc='sortDesc',
         :hide-default-footer='true',
+        :items-per-page='items.length',
         multi-sort
       )
         template(v-slot:item.rank='{ index }') {{ index + 1 }}
